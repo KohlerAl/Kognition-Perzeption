@@ -9,10 +9,15 @@ var DinoGame;
     class MoveDetector {
         scaleAcc = 1;
         ele;
+        btn;
         constructor() {
-            window.addEventListener("devicemotion", this.handleMotion);
             this.ele = document.querySelector("#x");
             instance = this;
+            this.btn = document.querySelector("button");
+            this.btn.addEventListener("pointerdown", this.addListener);
+        }
+        addListener() {
+            window.addEventListener("devicemotion", instance.handleMotion);
         }
         handleMotion(_event) {
             const acc = _event.acceleration;
@@ -20,7 +25,7 @@ var DinoGame;
                 let num = instance.scaleAcc * acc.x;
                 instance.ele.innerHTML = num + "";
             }
-            let test = document.querySelector("div");
+            let test = document.querySelector("#cont");
             test.innerHTML = _event + "";
         }
     }

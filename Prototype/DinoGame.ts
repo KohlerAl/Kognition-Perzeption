@@ -10,10 +10,19 @@ namespace DinoGame {
     export class MoveDetector {
         private scaleAcc: number = 1;
         private ele: HTMLElement;
+        private btn: HTMLButtonElement;
+
         constructor() {
-            window.addEventListener("devicemotion", this.handleMotion);
             this.ele = <HTMLElement>document.querySelector("#x");
             instance = this;
+            this.btn = <HTMLButtonElement>document.querySelector("button");
+            this.btn.addEventListener("pointerdown", this.addListener);
+        }
+
+
+        addListener(): void {
+            window.addEventListener("devicemotion", instance.handleMotion);
+
         }
 
         handleMotion(_event: DeviceMotionEvent): void {
@@ -23,7 +32,7 @@ namespace DinoGame {
                 instance.ele.innerHTML = num + "";
 
             }
-            let test: HTMLElement = <HTMLElement>document.querySelector("div");
+            let test: HTMLElement = <HTMLElement>document.querySelector("#cont");
             test.innerHTML = _event + "";
         }
     }
