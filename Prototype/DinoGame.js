@@ -2,8 +2,14 @@
 var DinoGame;
 (function (DinoGame) {
     let instance;
-    let highestLeft = 0;
-    let highestRight = 0;
+    /* let highestLeft: number = 0;
+    let highestRight: number = 0; */
+    let firstNum = 0;
+    let secondNum = 0;
+    let firstMeasured = false;
+    let allowSecond = false;
+    let timeout = false;
+    let currentDir;
     window.addEventListener("load", handleLoad);
     function handleLoad() {
         instance = new MoveDetector();
@@ -19,26 +25,36 @@ var DinoGame;
         }
         addListener() {
             window.addEventListener("devicemotion", instance.handleMotion);
-            /* let acceleration: HTMLDivElement = <HTMLDivElement>document.querySelector("#acceleration");
-            acceleration.style.display = "block";
-
-            instance.btn.style.display = "none"; */
         }
         handleMotion(_event) {
             const acc = _event.acceleration;
-            if (acc.x) {
-                if (Math.sign(acc.x) == 1) {
-                    if (acc.x > highestRight)
-                        highestRight = acc.x;
+            if (!firstMeasured && !timeout) {
+                if (acc.x) {
+                    firstNum = acc.x;
+                    firstMeasured = true;
+                    window.setTimeout(function () {
+                        allowSecond = true;
+                    }, 50);
                 }
-                else if (Math.sign(acc.x) == -1) {
-                    if (acc.x < highestLeft)
-                        highestLeft = acc.x;
-                }
-                instance.ele.innerHTML = "Current acc: " + acc.x + "<br>" + "   Highestleft: " + highestLeft + "<br>    Highest Right: " + highestRight;
             }
-            let test = document.querySelector("#cont");
-            test.innerHTML = _event + "";
+            else if (firstMeasured && allowSecond && !timeout) {
+                if (acc.x) {
+                    secondNum = acc.x;
+                    if (firstNum - secondNum > 1) {
+                        currentDir = "left";
+                    }
+                    else if (firstNum - secondNum < -1) {
+                        currentDir = "right";
+                    }
+                    timeout = true;
+                    window.setTimeout(function () {
+                        timeout = false;
+                        allowSecond = false;
+                        firstMeasured = false;
+                    }, 500);
+                }
+                instance.ele.innerHTML = currentDir;
+            }
         }
     }
     DinoGame.MoveDetector = MoveDetector;
