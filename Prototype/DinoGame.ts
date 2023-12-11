@@ -65,7 +65,7 @@ namespace DinoGame {
                         firstMeasured = false; 
                         firstNum = 0; 
                         secondNum = 0; 
-                    }, 100); 
+                    }, 300); 
                 }
 
                 instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum; 
