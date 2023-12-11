@@ -51,7 +51,7 @@ var DinoGame;
                         timeout = false;
                         allowSecond = false;
                         firstMeasured = false;
-                    }, 500);
+                    }, 100);
                 }
                 instance.ele.innerHTML = currentDir;
             }
