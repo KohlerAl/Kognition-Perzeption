@@ -40,10 +40,10 @@ var DinoGame;
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x;
-                    if (firstNum - secondNum > 0) {
+                    if (firstNum - secondNum > 1) {
                         currentDir = "left";
                     }
-                    else if (firstNum - secondNum < 0) {
+                    else if (firstNum - secondNum < -1) {
                         currentDir = "right";
                     }
                     timeout = true;
@@ -53,7 +53,7 @@ var DinoGame;
                         firstMeasured = false;
                         firstNum = 0;
                         secondNum = 0;
-                    }, 500);
+                    }, 200);
                 }
                 instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum;
             }
