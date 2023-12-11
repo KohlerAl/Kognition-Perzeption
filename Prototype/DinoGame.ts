@@ -1,6 +1,9 @@
 namespace DinoGame {
     let instance: MoveDetector;
 
+    let highestLeft: number = 0;
+    let highestRight: number = 0;
+
     window.addEventListener("load", handleLoad);
 
     function handleLoad(): void {
@@ -8,7 +11,6 @@ namespace DinoGame {
     }
 
     export class MoveDetector {
-        private scaleAcc: number = 1;
         private ele: HTMLElement;
         private btn: HTMLButtonElement;
 
@@ -23,15 +25,28 @@ namespace DinoGame {
         addListener(): void {
             window.addEventListener("devicemotion", instance.handleMotion);
 
+            let acceleration: HTMLDivElement = <HTMLDivElement>document.querySelector("#acceleration");
+            acceleration.style.display = "block";
+
+            instance.btn.style.display = "none";
         }
 
         handleMotion(_event: DeviceMotionEvent): void {
             const acc: DeviceMotionEventAcceleration = <DeviceMotionEventAcceleration>_event.acceleration;
             if (acc.x) {
-                let num = instance.scaleAcc * acc.x;
-                instance.ele.innerHTML = num + "";
 
+                if (Math.sign(acc.x) == 1) {
+                    if (acc.x > highestRight)
+                        highestRight = acc.x;
+                }
+                else if (Math.sign(acc.x) == -1) {
+                    if (acc.x < highestLeft)
+                        highestLeft = acc.x;
+                }
+                instance.ele.innerHTML = "Current acc: " + acc.x + "<br>" + "   Highestleft: " + highestLeft + "<br>    Highest Right: " + highestRight;
             }
+
+
             let test: HTMLElement = <HTMLElement>document.querySelector("#cont");
             test.innerHTML = _event + "";
         }
