@@ -17,8 +17,10 @@ var DinoGame;
         handleMotion(_event) {
             const acc = _event.acceleration;
             if (acc.x) {
-                let num = this.scaleAcc * acc.x;
-                this.ele.innerHTML = num + "";
+                let num = instance.scaleAcc * acc.x;
+                instance.ele.innerHTML = num + "";
+                let test = document.querySelector("div");
+                test.innerHTML = _event + "";
             }
         }
     }
