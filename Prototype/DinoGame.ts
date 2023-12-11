@@ -51,10 +51,10 @@ namespace DinoGame {
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x
-                    if(firstNum - secondNum > 1) {
+                    if(firstNum - secondNum > 0) {
                         currentDir = "left"; 
                     }
-                    else if(firstNum - secondNum < -1) {
+                    else if(firstNum - secondNum < 0) {
                         currentDir = "right";
                     }
 
