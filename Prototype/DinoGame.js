@@ -19,9 +19,9 @@ var DinoGame;
             if (acc.x) {
                 let num = instance.scaleAcc * acc.x;
                 instance.ele.innerHTML = num + "";
-                let test = document.querySelector("div");
-                test.innerHTML = _event + "";
             }
+            let test = document.querySelector("div");
+            test.innerHTML = _event + "";
         }
     }
     DinoGame.MoveDetector = MoveDetector;
