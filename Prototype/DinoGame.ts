@@ -25,10 +25,10 @@ namespace DinoGame {
         addListener(): void {
             window.addEventListener("devicemotion", instance.handleMotion);
 
-            let acceleration: HTMLDivElement = <HTMLDivElement>document.querySelector("#acceleration");
+            /* let acceleration: HTMLDivElement = <HTMLDivElement>document.querySelector("#acceleration");
             acceleration.style.display = "block";
 
-            instance.btn.style.display = "none";
+            instance.btn.style.display = "none"; */
         }
 
         handleMotion(_event: DeviceMotionEvent): void {
