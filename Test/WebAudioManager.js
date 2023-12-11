@@ -2,9 +2,7 @@
 if (window.AudioContext == undefined)
     window.AudioContext = window.webkitAudioContext;
 class WebAudioManager {
-    constructor() {
-        this.context = new AudioContext();
-    }
+    context = new AudioContext();
     getCheck() {
         return new Promise((resolve, reject) => {
             if (AudioContext) {

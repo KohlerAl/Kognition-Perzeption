@@ -1,9 +1,9 @@
 "use strict";
 class StartScreen {
+    screenDiv = null;
+    textDiv = null;
+    managers = [];
     constructor(id) {
-        this.screenDiv = null;
-        this.textDiv = null;
-        this.managers = [];
         this.screenDiv = document.getElementById(id);
         this.textDiv = this.screenDiv.querySelector("p");
     }

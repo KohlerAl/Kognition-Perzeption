@@ -1,9 +1,7 @@
 "use strict";
 class GeoLocationManager {
-    constructor() {
-        this.onLocation = null;
-        this.timeout = null;
-    }
+    onLocation = null;
+    timeout = null;
     getCheck() {
         return new Promise((resolve, reject) => {
             if (navigator.geolocation) {

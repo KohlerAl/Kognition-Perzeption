@@ -1,7 +1,9 @@
 "use strict";
 class UserMediaManager {
+    stream;
+    videoElement = null;
+    constraints;
     constructor(constraints) {
-        this.videoElement = null;
         this.constraints = constraints;
     }
     getCheck() {
