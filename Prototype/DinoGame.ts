@@ -63,10 +63,12 @@ namespace DinoGame {
                         timeout = false; 
                         allowSecond = false; 
                         firstMeasured = false; 
+                        firstNum = 0; 
+                        secondNum = 0; 
                     }, 100); 
                 }
 
-                instance.ele.innerHTML = currentDir; 
+                instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum; 
             }
 
 
