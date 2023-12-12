@@ -49,6 +49,8 @@ var DinoGame;
                     instance.ele.classList.add("red");
                     instance.ele.classList.remove("green");
                     timeout = true;
+                    let diff = firstNum - secondNum;
+                    instance.ele.innerHTML = currentDir + " difference: " + diff;
                     window.setTimeout(function () {
                         instance.ele.classList.add("green");
                         instance.ele.classList.remove("red");
@@ -59,7 +61,6 @@ var DinoGame;
                         secondNum = 0;
                     }, 1000);
                 }
-                instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum;
             }
         }
     }
