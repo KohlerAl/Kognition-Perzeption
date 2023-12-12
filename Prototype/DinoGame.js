@@ -2,8 +2,8 @@
 var DinoGame;
 (function (DinoGame) {
     let instance;
-    /* let highestLeft: number = 0;
-    let highestRight: number = 0; */
+    let highestLeft = 0;
+    let highestRight = 0;
     let firstNum = 0;
     let secondNum = 0;
     let firstMeasured = false;
@@ -16,9 +16,11 @@ var DinoGame;
     }
     class MoveDetector {
         ele;
+        ele2;
         btn;
         constructor() {
             this.ele = document.querySelector("#x");
+            this.ele2 = document.querySelector("#b");
             instance = this;
             this.btn = document.querySelector("button");
             this.btn.addEventListener("pointerdown", this.addListener);
@@ -55,8 +57,19 @@ var DinoGame;
                         secondNum = 0;
                     }, 1000);
                 }
-                let diff = firstNum - secondNum;
-                instance.ele.innerHTML = currentDir + " diff: " + diff;
+                let diff = firstNum + secondNum;
+                instance.ele.innerHTML = currentDir + " all: " + diff;
+            }
+            if (acc.x) {
+                if (Math.sign(acc.x) == 1) {
+                    if (acc.x > highestRight)
+                        highestRight = acc.x;
+                }
+                else if (Math.sign(acc.x) == -1) {
+                    if (acc.x < highestLeft)
+                        highestLeft = acc.x;
+                }
+                instance.ele2.innerHTML = "Left: " + highestLeft + "  Right: " + highestRight;
             }
         }
     }
