@@ -89,14 +89,14 @@ namespace DinoGame {
 
                 window.setTimeout(function(): void {
                     allowMeasure = false; 
-                    highestLeft = 0; 
-                    highestRight = 0; 
                     if (Math.abs(highestLeft) > highestRight) {
                         currentDir2 = "left"
                     }
                     else if (Math.abs(highestLeft) < highestRight) {
                         currentDir2 = "right"
-                    }
+                    } 
+                    highestLeft = 0; 
+                    highestRight = 0;
                 }, 20)
 
                 window.setTimeout(function(): void {
