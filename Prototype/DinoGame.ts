@@ -1,17 +1,5 @@
 namespace DinoGame {
-    enum LANE {
-        LEFT,
-        MIDDLE,
-        RIGHT
-    }
-
-    enum DIR {
-        LEFT, 
-        RIGHT
-    }
-
     let instance: MoveDetector;
-    let laneMng: LaneManager; 
 
     let firstNum: number = 0;
     let secondNum: number = 0;
@@ -20,42 +8,12 @@ namespace DinoGame {
     let allowSecond: boolean = false;
 
     let timeout: boolean = false;
-    let currentDir: DIR;
+    let currentDir: string;
 
     window.addEventListener("load", handleLoad);
 
     function handleLoad(): void {
         instance = new MoveDetector();
-        laneMng = new LaneManager(); 
-    }
-
-    export class LaneManager {
-        public currentLane: LANE = LANE.MIDDLE; 
-
-        changeLane(): void {
-            switch(this.currentLane) {
-                case LANE.LEFT: 
-                    if(currentDir == DIR.RIGHT)
-                        this.currentLane = LANE.MIDDLE; 
-                break; 
-
-
-                case LANE.MIDDLE:
-                    if(currentDir == DIR.LEFT)
-                        this.currentLane = LANE.LEFT;
-
-                    else if(currentDir == DIR.RIGHT)
-                        this.currentLane = LANE.RIGHT; 
-
-                break; 
-
-                case LANE.RIGHT: 
-                if(currentDir == DIR.LEFT)
-                    this.currentLane = LANE.MIDDLE; 
-
-                break; 
-            }
-        }
     }
 
     export class MoveDetector {
@@ -91,20 +49,18 @@ namespace DinoGame {
                 if (acc.x) {
                     secondNum = acc.x
                     if (firstNum - secondNum > 0.5) { //positive
-                        currentDir = DIR.LEFT;
+                        currentDir = "left";
                     }
                     else if (firstNum - secondNum < -0.5) { //negative
-                        currentDir = DIR.RIGHT;
+                        currentDir = "right";
                     }
                     instance.ele.classList.add("red");
                     instance.ele.classList.remove("green")
 
-                    laneMng.changeLane(); 
-
                     timeout = true;
 
                     let diff: number = firstNum - secondNum;
-                    instance.ele.innerHTML = currentDir + " difference: " + diff + "   current: " + laneMng.currentLane;
+                    instance.ele.innerHTML = currentDir + " difference: " + diff;
 
                     window.setTimeout(function (): void {
                         instance.ele.classList.add("green");

@@ -1,19 +1,7 @@
 "use strict";
 var DinoGame;
 (function (DinoGame) {
-    let LANE;
-    (function (LANE) {
-        LANE[LANE["LEFT"] = 0] = "LEFT";
-        LANE[LANE["MIDDLE"] = 1] = "MIDDLE";
-        LANE[LANE["RIGHT"] = 2] = "RIGHT";
-    })(LANE || (LANE = {}));
-    let DIR;
-    (function (DIR) {
-        DIR[DIR["LEFT"] = 0] = "LEFT";
-        DIR[DIR["RIGHT"] = 1] = "RIGHT";
-    })(DIR || (DIR = {}));
     let instance;
-    let laneMng;
     let firstNum = 0;
     let secondNum = 0;
     let firstMeasured = false;
@@ -23,30 +11,7 @@ var DinoGame;
     window.addEventListener("load", handleLoad);
     function handleLoad() {
         instance = new MoveDetector();
-        laneMng = new LaneManager();
     }
-    class LaneManager {
-        currentLane = LANE.MIDDLE;
-        changeLane() {
-            switch (this.currentLane) {
-                case LANE.LEFT:
-                    if (currentDir == DIR.RIGHT)
-                        this.currentLane = LANE.MIDDLE;
-                    break;
-                case LANE.MIDDLE:
-                    if (currentDir == DIR.LEFT)
-                        this.currentLane = LANE.LEFT;
-                    else if (currentDir == DIR.RIGHT)
-                        this.currentLane = LANE.RIGHT;
-                    break;
-                case LANE.RIGHT:
-                    if (currentDir == DIR.LEFT)
-                        this.currentLane = LANE.MIDDLE;
-                    break;
-            }
-        }
-    }
-    DinoGame.LaneManager = LaneManager;
     class MoveDetector {
         ele;
         btn;
@@ -74,17 +39,16 @@ var DinoGame;
                 if (acc.x) {
                     secondNum = acc.x;
                     if (firstNum - secondNum > 0.5) { //positive
-                        currentDir = DIR.LEFT;
+                        currentDir = "left";
                     }
                     else if (firstNum - secondNum < -0.5) { //negative
-                        currentDir = DIR.RIGHT;
+                        currentDir = "right";
                     }
                     instance.ele.classList.add("red");
                     instance.ele.classList.remove("green");
-                    laneMng.changeLane();
                     timeout = true;
                     let diff = firstNum - secondNum;
-                    instance.ele.innerHTML = currentDir + " difference: " + diff + "   current: " + laneMng.currentLane;
+                    instance.ele.innerHTML = currentDir + " difference: " + diff;
                     window.setTimeout(function () {
                         instance.ele.classList.add("green");
                         instance.ele.classList.remove("red");
