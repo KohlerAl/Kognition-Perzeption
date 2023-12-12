@@ -47,9 +47,11 @@ var DinoGame;
                         currentDir = "right";
                     }
                     instance.ele.classList.add("red");
+                    instance.ele.classList.remove("green");
                     timeout = true;
                     window.setTimeout(function () {
                         instance.ele.classList.add("green");
+                        instance.ele.classList.remove("red");
                         timeout = false;
                         allowSecond = false;
                         firstMeasured = false;
