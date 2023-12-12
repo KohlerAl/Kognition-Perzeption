@@ -40,10 +40,10 @@ var DinoGame;
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x;
-                    if (firstNum - secondNum > 0) { //positive
+                    if (firstNum - secondNum > 0.5) { //positive
                         currentDir = "left";
                     }
-                    else if (firstNum - secondNum < 0) { //negative
+                    else if (firstNum - secondNum < -0.5) { //negative
                         currentDir = "right";
                     }
                     instance.ele.classList.add("red");
