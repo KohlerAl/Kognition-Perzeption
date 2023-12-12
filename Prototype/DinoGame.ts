@@ -57,20 +57,16 @@ namespace DinoGame {
                     else if(firstNum - secondNum < -0.5) { //negative
                         currentDir = "right";
                     }
-                    instance.ele.classList.add("red"); 
-                    instance.ele.classList.remove("green")
 
                     timeout = true; 
                     window.setTimeout(function(): void 
                     {
-                        instance.ele.classList.add("green"); 
-                        instance.ele.classList.remove("red")
                         timeout = false; 
                         allowSecond = false; 
                         firstMeasured = false; 
                         firstNum = 0; 
                         secondNum = 0; 
-                    }, 1000); 
+                    }, 1500); 
                 }
 
                 instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum; 
