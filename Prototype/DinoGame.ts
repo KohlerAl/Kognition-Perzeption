@@ -12,6 +12,8 @@ namespace DinoGame {
 
     let timeout: boolean = false;
     let currentDir: string;
+    let currentDir2: string; 
+    let allowMeasure: boolean = true; 
 
     window.addEventListener("load", handleLoad);
 
@@ -74,7 +76,7 @@ namespace DinoGame {
                 instance.ele.innerHTML = currentDir + " all: " + diff;
             }
 
-            if (acc.x) {
+            if (acc.x && allowMeasure) {
 
                 if (Math.sign(acc.x) == 1) {
                     if (acc.x > highestRight)
@@ -85,7 +87,21 @@ namespace DinoGame {
                         highestLeft = acc.x;
                 }
 
-                instance.ele2.innerHTML = "Left: " + highestLeft + "  Right: " + highestRight; 
+                window.setTimeout(function(): void {
+                    allowMeasure = false; 
+                    if (Math.abs(highestLeft) > highestRight) {
+                        currentDir2 = "left"
+                    }
+                    else if (Math.abs(highestLeft) < highestRight) {
+                        currentDir2 = "right"
+                    }
+                }, 20)
+
+                window.setTimeout(function(): void {
+                    allowMeasure = true; 
+                }, 1020)
+
+                instance.ele2.innerHTML = currentDir2 +  "   Left: " + highestLeft + "  Right: " + highestRight; 
             }
 
 
