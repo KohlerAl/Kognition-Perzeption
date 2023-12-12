@@ -1,8 +1,17 @@
 namespace DinoGame {
-    let instance: MoveDetector;
+    enum LANE {
+        LEFT,
+        MIDDLE,
+        RIGHT
+    }
 
-    /* let highestLeft: number = 0;
-    let highestRight: number = 0; */
+    enum DIR {
+        LEFT, 
+        RIGHT
+    }
+
+    let instance: MoveDetector;
+    let laneMng: LaneManager; 
 
     let firstNum: number = 0;
     let secondNum: number = 0;
@@ -11,12 +20,42 @@ namespace DinoGame {
     let allowSecond: boolean = false;
 
     let timeout: boolean = false;
-    let currentDir: string;
+    let currentDir: DIR;
 
     window.addEventListener("load", handleLoad);
 
     function handleLoad(): void {
         instance = new MoveDetector();
+        laneMng = new LaneManager(); 
+    }
+
+    export class LaneManager {
+        public currentLane: LANE = LANE.MIDDLE; 
+
+        changeLane(): void {
+            switch(this.currentLane) {
+                case LANE.LEFT: 
+                    if(currentDir == DIR.RIGHT)
+                        this.currentLane = LANE.MIDDLE; 
+                break; 
+
+
+                case LANE.MIDDLE:
+                    if(currentDir == DIR.LEFT)
+                        this.currentLane = LANE.LEFT;
+
+                    else if(currentDir == DIR.RIGHT)
+                        this.currentLane = LANE.RIGHT; 
+
+                break; 
+
+                case LANE.RIGHT: 
+                if(currentDir == DIR.LEFT)
+                    this.currentLane = LANE.MIDDLE; 
+
+                break; 
+            }
+        }
     }
 
     export class MoveDetector {
@@ -51,11 +90,11 @@ namespace DinoGame {
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x
-                    if (firstNum - secondNum > 0) { //positive
-                        currentDir = "left";
+                    if (firstNum - secondNum > 0.5) { //positive
+                        currentDir = DIR.LEFT;
                     }
-                    else if (firstNum - secondNum < 0) { //negative
-                        currentDir = "right";
+                    else if (firstNum - secondNum < -0.5) { //negative
+                        currentDir = DIR.RIGHT;
                     }
                     instance.ele.classList.add("red");
                     instance.ele.classList.remove("green")
@@ -63,8 +102,8 @@ namespace DinoGame {
                     timeout = true;
 
                     let diff: number = firstNum - secondNum;
-                    instance.ele.innerHTML = currentDir + " difference: " + diff;
-                    
+                    instance.ele.innerHTML = currentDir + " difference: " + diff + "   current: " + laneMng.currentLane;
+
                     window.setTimeout(function (): void {
                         instance.ele.classList.add("green");
                         instance.ele.classList.remove("red")
