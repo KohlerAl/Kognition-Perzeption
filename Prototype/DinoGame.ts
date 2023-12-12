@@ -89,6 +89,8 @@ namespace DinoGame {
 
                 window.setTimeout(function(): void {
                     allowMeasure = false; 
+                    highestLeft = 0; 
+                    highestRight = 0; 
                     if (Math.abs(highestLeft) > highestRight) {
                         currentDir2 = "left"
                     }
