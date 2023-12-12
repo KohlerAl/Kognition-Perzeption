@@ -81,6 +81,7 @@ var DinoGame;
                     }
                     instance.ele.classList.add("red");
                     instance.ele.classList.remove("green");
+                    laneMng.changeLane();
                     timeout = true;
                     let diff = firstNum - secondNum;
                     instance.ele.innerHTML = currentDir + " difference: " + diff + "   current: " + laneMng.currentLane;
