@@ -2,6 +2,8 @@
 var DinoGame;
 (function (DinoGame) {
     let instance;
+    /* let highestLeft: number = 0;
+    let highestRight: number = 0; */
     let firstNum = 0;
     let secondNum = 0;
     let firstMeasured = false;
@@ -38,17 +40,15 @@ var DinoGame;
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x;
-                    if (firstNum - secondNum > 0.5) { //positive
+                    if (firstNum - secondNum > 0) { //positive
                         currentDir = "left";
                     }
-                    else if (firstNum - secondNum < -0.5) { //negative
+                    else if (firstNum - secondNum < 0) { //negative
                         currentDir = "right";
                     }
                     instance.ele.classList.add("red");
                     instance.ele.classList.remove("green");
                     timeout = true;
-                    let diff = firstNum - secondNum;
-                    instance.ele.innerHTML = currentDir + " difference: " + diff;
                     window.setTimeout(function () {
                         instance.ele.classList.add("green");
                         instance.ele.classList.remove("red");
@@ -59,6 +59,7 @@ var DinoGame;
                         secondNum = 0;
                     }, 1000);
                 }
+                instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum;
             }
         }
     }

@@ -1,14 +1,17 @@
 namespace DinoGame {
     let instance: MoveDetector;
 
+    /* let highestLeft: number = 0;
+    let highestRight: number = 0; */
+
     let firstNum: number = 0;
     let secondNum: number = 0;
 
     let firstMeasured: boolean = false;
-    let allowSecond: boolean = false;
+    let allowSecond: boolean = false; 
 
     let timeout: boolean = false;
-    let currentDir: string;
+    let currentDir: string; 
 
     window.addEventListener("load", handleLoad);
 
@@ -36,42 +39,41 @@ namespace DinoGame {
             const acc: DeviceMotionEventAcceleration = <DeviceMotionEventAcceleration>_event.acceleration;
 
             if (!firstMeasured && !timeout) {
-                if (acc.x) {
+                if (acc.x){
                     firstNum = acc.x;
-                    firstMeasured = true;
+                    firstMeasured = true; 
 
-                    window.setTimeout(function (): void {
-                        allowSecond = true;
-                    }, 20);
+                    window.setTimeout(function(): void {
+                        allowSecond = true; 
+                    }, 20); 
                 }
             }
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x
-                    if (firstNum - secondNum > 0.5) { //positive
-                        currentDir = "left";
+                    if(firstNum - secondNum > 0) { //positive
+                        currentDir = "left"; 
                     }
-                    else if (firstNum - secondNum < -0.5) { //negative
+                    else if(firstNum - secondNum < 0) { //negative
                         currentDir = "right";
                     }
-                    instance.ele.classList.add("red");
+                    instance.ele.classList.add("red"); 
                     instance.ele.classList.remove("green")
 
-                    timeout = true;
-
-                    let diff: number = firstNum - secondNum;
-                    instance.ele.innerHTML = currentDir + " difference: " + diff;
-
-                    window.setTimeout(function (): void {
-                        instance.ele.classList.add("green");
+                    timeout = true; 
+                    window.setTimeout(function(): void 
+                    {
+                        instance.ele.classList.add("green"); 
                         instance.ele.classList.remove("red")
-                        timeout = false;
-                        allowSecond = false;
-                        firstMeasured = false;
-                        firstNum = 0;
-                        secondNum = 0;
-                    }, 1000);
+                        timeout = false; 
+                        allowSecond = false; 
+                        firstMeasured = false; 
+                        firstNum = 0; 
+                        secondNum = 0; 
+                    }, 1000); 
                 }
+
+                instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum; 
             }
 
 
