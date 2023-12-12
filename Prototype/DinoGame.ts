@@ -51,15 +51,18 @@ namespace DinoGame {
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x
-                    if(firstNum - secondNum > 0.5) {
+                    if(firstNum - secondNum > 0) { //positive
                         currentDir = "left"; 
                     }
-                    else if(firstNum - secondNum < -0.5) {
+                    else if(firstNum - secondNum < 0) { //negative
                         currentDir = "right";
                     }
+                    instance.ele.classList.add("red"); 
 
                     timeout = true; 
-                    window.setTimeout(function(): void {
+                    window.setTimeout(function(): void 
+                    {
+                        instance.ele.classList.add("green"); 
                         timeout = false; 
                         allowSecond = false; 
                         firstMeasured = false; 
