@@ -66,10 +66,11 @@ namespace DinoGame {
                         firstMeasured = false; 
                         firstNum = 0; 
                         secondNum = 0; 
-                    }, 1500); 
+                    }, 1000); 
                 }
+                let diff: number = firstNum - secondNum; 
 
-                instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum; 
+                instance.ele.innerHTML = currentDir + " diff: " + diff; 
             }
 
 

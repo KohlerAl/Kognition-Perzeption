@@ -53,9 +53,10 @@ var DinoGame;
                         firstMeasured = false;
                         firstNum = 0;
                         secondNum = 0;
-                    }, 1500);
+                    }, 1000);
                 }
-                instance.ele.innerHTML = currentDir + " first: " + firstNum + " second: " + secondNum;
+                let diff = firstNum - secondNum;
+                instance.ele.innerHTML = currentDir + " diff: " + diff;
             }
         }
     }
