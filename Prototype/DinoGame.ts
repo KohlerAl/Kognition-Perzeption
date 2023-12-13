@@ -98,6 +98,7 @@ namespace DinoGame {
                     instance.ele2.innerHTML = currentDir2 +  "   Left: " + highestLeft + "  Right: " + highestRight; 
                     highestLeft = 0; 
                     highestRight = 0;
+                    
 
                 }, 20)
 
