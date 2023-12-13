@@ -73,10 +73,10 @@ var DinoGame;
                 }
                 window.setTimeout(function () {
                     allowMeasure = false;
-                    if (Math.abs(highestLeft) > highestRight) {
+                    if (Math.abs(highestLeft) > highestRight && Math.abs(highestLeft) > 1) {
                         currentDir2 = "left";
                     }
-                    else if (Math.abs(highestLeft) < highestRight) {
+                    else if (Math.abs(highestLeft) < highestRight && highestRight > 1) {
                         currentDir2 = "right";
                     }
                     highestLeft = 0;
