@@ -89,10 +89,10 @@ namespace DinoGame {
 
                 window.setTimeout(function(): void {
                     allowMeasure = false; 
-                    if (Math.abs(highestLeft) > highestRight && Math.abs(highestLeft) > 1) {
+                    if (Math.abs(highestLeft) > highestRight && Math.abs(highestLeft) > 0.5) {
                         currentDir2 = "left"
                     }
-                    else if (Math.abs(highestLeft) < highestRight && highestRight > 1) {
+                    else if (Math.abs(highestLeft) < highestRight && highestRight > 0.5) {
                         currentDir2 = "right"
                     } 
                     instance.ele2.innerHTML = currentDir2 +  "   Left: " + highestLeft + "  Right: " + highestRight; 
