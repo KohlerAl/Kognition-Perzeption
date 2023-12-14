@@ -1,8 +1,8 @@
 namespace DinoGame {
     let instance: MoveDetector;
 
-    let highestLeft: number = 0;
-    let highestRight: number = 0;
+    /* let highestLeft: number = 0;
+    let highestRight: number = 0; */
 
     let firstNum: number = 0;
     let secondNum: number = 0;
@@ -12,8 +12,8 @@ namespace DinoGame {
 
     let timeout: boolean = false;
     let currentDir: string;
-    let currentDir2: string; 
-    let allowMeasure: boolean = true; 
+    /* let currentDir2: string; 
+    let allowMeasure: boolean = true;  */
 
     window.addEventListener("load", handleLoad);
 
@@ -23,12 +23,12 @@ namespace DinoGame {
 
     export class MoveDetector {
         private ele: HTMLElement;
-        private ele2: HTMLElement; 
+        /* private ele2: HTMLElement; */ 
         private btn: HTMLButtonElement;
 
         constructor() {
             this.ele = <HTMLElement>document.querySelector("#x");
-            this.ele2 = <HTMLElement>document.querySelector("#b");
+            /* this.ele2 = <HTMLElement>document.querySelector("#b"); */
             instance = this;
             this.btn = <HTMLButtonElement>document.querySelector("button");
             this.btn.addEventListener("pointerdown", this.addListener);
@@ -37,6 +37,7 @@ namespace DinoGame {
 
         addListener(): void {
             window.addEventListener("devicemotion", instance.handleMotion);
+            instance.btn.removeEventListener("pointerdown", this.addListener)
         }
 
         handleMotion(_event: DeviceMotionEvent): void {
@@ -76,7 +77,7 @@ namespace DinoGame {
                 instance.ele.innerHTML = currentDir + " all: " + diff;
             }
 
-            if (acc.x && allowMeasure) {
+            /* if (acc.x && allowMeasure) {
 
                 if (Math.sign(acc.x) == 1) {
                     if (acc.x > highestRight)
@@ -105,7 +106,7 @@ namespace DinoGame {
                 window.setTimeout(function(): void {
                     allowMeasure = true; 
                 }, 1020)
-            }
+            } */
 
 
         }

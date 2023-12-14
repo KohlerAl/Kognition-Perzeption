@@ -2,33 +2,34 @@
 var DinoGame;
 (function (DinoGame) {
     let instance;
-    let highestLeft = 0;
-    let highestRight = 0;
+    /* let highestLeft: number = 0;
+    let highestRight: number = 0; */
     let firstNum = 0;
     let secondNum = 0;
     let firstMeasured = false;
     let allowSecond = false;
     let timeout = false;
     let currentDir;
-    let currentDir2;
-    let allowMeasure = true;
+    /* let currentDir2: string;
+    let allowMeasure: boolean = true;  */
     window.addEventListener("load", handleLoad);
     function handleLoad() {
         instance = new MoveDetector();
     }
     class MoveDetector {
         ele;
-        ele2;
+        /* private ele2: HTMLElement; */
         btn;
         constructor() {
             this.ele = document.querySelector("#x");
-            this.ele2 = document.querySelector("#b");
+            /* this.ele2 = <HTMLElement>document.querySelector("#b"); */
             instance = this;
             this.btn = document.querySelector("button");
             this.btn.addEventListener("pointerdown", this.addListener);
         }
         addListener() {
             window.addEventListener("devicemotion", instance.handleMotion);
+            instance.btn.removeEventListener("pointerdown", this.addListener);
         }
         handleMotion(_event) {
             const acc = _event.acceleration;
@@ -62,7 +63,8 @@ var DinoGame;
                 let diff = firstNum - secondNum;
                 instance.ele.innerHTML = currentDir + " all: " + diff;
             }
-            if (acc.x && allowMeasure) {
+            /* if (acc.x && allowMeasure) {
+
                 if (Math.sign(acc.x) == 1) {
                     if (acc.x > highestRight)
                         highestRight = acc.x;
@@ -71,22 +73,26 @@ var DinoGame;
                     if (acc.x < highestLeft)
                         highestLeft = acc.x;
                 }
-                window.setTimeout(function () {
+
+                window.setTimeout(function(): void {
                     allowMeasure = false;
                     if (Math.abs(highestLeft) > highestRight && Math.abs(highestLeft) > 0.2) {
-                        currentDir2 = "left";
+                        currentDir2 = "left"
                     }
                     else if (Math.abs(highestLeft) < highestRight && highestRight > 0.2) {
-                        currentDir2 = "right";
+                        currentDir2 = "right"
                     }
-                    instance.ele2.innerHTML = currentDir2 + "   Left: " + highestLeft + "  Right: " + highestRight;
+                    instance.ele2.innerHTML = currentDir2 +  "   Left: " + highestLeft + "  Right: " + highestRight;
                     highestLeft = 0;
                     highestRight = 0;
-                }, 20);
-                window.setTimeout(function () {
+                    
+
+                }, 20)
+
+                window.setTimeout(function(): void {
                     allowMeasure = true;
-                }, 1020);
-            }
+                }, 1020)
+            } */
         }
     }
     DinoGame.MoveDetector = MoveDetector;
