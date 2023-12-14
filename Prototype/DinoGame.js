@@ -44,10 +44,10 @@ var DinoGame;
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x;
-                    if (firstNum - secondNum > 0.3) { //positive
+                    if (firstNum - secondNum > 0.25) { //positive
                         currentDir = "left";
                     }
-                    else if (firstNum - secondNum < -0.3) { //negative
+                    else if (firstNum - secondNum < -0.25) { //negative
                         currentDir = "right";
                     }
                     timeout = true;
@@ -59,7 +59,7 @@ var DinoGame;
                         secondNum = 0;
                     }, 1000);
                 }
-                let diff = firstNum + secondNum;
+                let diff = firstNum - secondNum;
                 instance.ele.innerHTML = currentDir + " all: " + diff;
             }
             if (acc.x && allowMeasure) {
