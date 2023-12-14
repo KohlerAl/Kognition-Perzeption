@@ -38,16 +38,16 @@ var DinoGame;
                     firstMeasured = true;
                     window.setTimeout(function () {
                         allowSecond = true;
-                    }, 20);
+                    }, 15);
                 }
             }
             else if (firstMeasured && allowSecond && !timeout) {
                 if (acc.x) {
                     secondNum = acc.x;
-                    if (firstNum - secondNum > 0.5) { //positive
+                    if (firstNum - secondNum > 0.3) { //positive
                         currentDir = "left";
                     }
-                    else if (firstNum - secondNum < -0.5) { //negative
+                    else if (firstNum - secondNum < -0.3) { //negative
                         currentDir = "right";
                     }
                     timeout = true;
@@ -73,16 +73,16 @@ var DinoGame;
                 }
                 window.setTimeout(function () {
                     allowMeasure = false;
-                    if (Math.abs(highestLeft) > highestRight && Math.abs(highestLeft) > 0.5) {
+                    if (Math.abs(highestLeft) > highestRight && Math.abs(highestLeft) > 0.2) {
                         currentDir2 = "left";
                     }
-                    else if (Math.abs(highestLeft) < highestRight && highestRight > 0.5) {
+                    else if (Math.abs(highestLeft) < highestRight && highestRight > 0.2) {
                         currentDir2 = "right";
                     }
                     instance.ele2.innerHTML = currentDir2 + "   Left: " + highestLeft + "  Right: " + highestRight;
                     highestLeft = 0;
                     highestRight = 0;
-                }, 15);
+                }, 20);
                 window.setTimeout(function () {
                     allowMeasure = true;
                 }, 1020);
