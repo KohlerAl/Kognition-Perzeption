@@ -82,7 +82,7 @@ var DinoGame;
                     instance.ele2.innerHTML = currentDir2 + "   Left: " + highestLeft + "  Right: " + highestRight;
                     highestLeft = 0;
                     highestRight = 0;
-                }, 15);
+                }, 20);
                 window.setTimeout(function () {
                     allowMeasure = true;
                 }, 1020);

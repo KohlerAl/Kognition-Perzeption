@@ -100,7 +100,7 @@ namespace DinoGame {
                     highestRight = 0;
                     
 
-                }, 15)
+                }, 20)
 
                 window.setTimeout(function(): void {
                     allowMeasure = true; 
