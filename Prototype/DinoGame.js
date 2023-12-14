@@ -73,16 +73,16 @@ var DinoGame;
                 }
                 window.setTimeout(function () {
                     allowMeasure = false;
-                    if (Math.abs(highestLeft) > highestRight && Math.abs(highestLeft) > 0.5) {
+                    if (Math.abs(highestLeft) > highestRight && Math.abs(highestLeft) > 0.3) {
                         currentDir2 = "left";
                     }
-                    else if (Math.abs(highestLeft) < highestRight && highestRight > 0.5) {
+                    else if (Math.abs(highestLeft) < highestRight && highestRight > 0.3) {
                         currentDir2 = "right";
                     }
                     instance.ele2.innerHTML = currentDir2 + "   Left: " + highestLeft + "  Right: " + highestRight;
                     highestLeft = 0;
                     highestRight = 0;
-                }, 20);
+                }, 15);
                 window.setTimeout(function () {
                     allowMeasure = true;
                 }, 1020);
