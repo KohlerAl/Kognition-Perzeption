@@ -201,9 +201,13 @@ class Cloud {
 }
 function createInvaders() {
     //function to spawn the dinos
-    if (invaders.length == 0) {
+    /* if (invaders.length == 0) {
         invaders.push(new Invader(currentLane)); // Pass the player's current lane
         //invaders.push(new Invader());
+        console.log("hello dino") */
+    // function to spawn the dinos
+    if (invaders.length === 0 && currentLane === LANE.MIDDLE) {
+        invaders.push(new Invader(currentLane)); // Pass the player's current lane
         console.log("hello dino");
     }
 }
