@@ -111,8 +111,9 @@ class Invader {
     currentDist: number = 800;
     filter;
     filterVal: number = 3000;
+    initialLane: LANE;
 
-    constructor() {
+    constructor(initialLane: LANE) {
         //walk toward the bottom
         this.velocity = {
             x: 0,
@@ -127,12 +128,19 @@ class Invader {
         const scale = 0.05;
         this.width = this.image.width * scale;
         this.height = this.image.height * scale;
+        this.initialLane = initialLane;
 
-        //set the position
+        // Set the position based on the initial lane
         this.position = {
-            x: canvas.width / 2 - this.width / 2,
+            x: (initialLane === LANE.LEFT ? canvas.width / 4 : (initialLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - this.width / 2,
             y: canvas.height / 5
         };
+
+        //set the position
+       /*  this.position = {
+            x: canvas.width / 2 - this.width / 2,
+            y: canvas.height / 5
+        }; */
 
         //create new Audio Element and set the source to the rawr sound
         this.sound = new Audio();
@@ -179,6 +187,8 @@ class Invader {
 
             //make sure dino stays in the middle of the screen
             this.position.x = canvas.width / 2 - this.width / 2;
+            // Make sure dino stays in the initial lane
+        this.position.x = (this.initialLane === LANE.LEFT ? canvas.width / 4 : (this.initialLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - this.width / 2;
 
             //if the dino is wider than the canvas, make it despawn
             if (this.width >= canvas.width) {
@@ -262,7 +272,8 @@ class Cloud {
 function createInvaders() {
     //function to spawn the dinos
     if (invaders.length == 0) {
-        invaders.push(new Invader());
+        invaders.push(new Invader(currentLane)); // Pass the player's current lane
+        //invaders.push(new Invader());
         console.log("hello dino")
     }
 }
