@@ -1,6 +1,6 @@
 let canvas: HTMLCanvasElement;
 let c: CanvasRenderingContext2D;
-let currentPoints: number; 
+let currentPoints: number;
 
 
 //Lanes 
@@ -63,8 +63,8 @@ function startGame(): void {
         animate();
     }, 25)
 
-    window.setInterval(function(): void {
-        currentPoints += 1; 
+    window.setInterval(function (): void {
+        currentPoints += 1;
     }, 1000)
 }
 
@@ -73,7 +73,7 @@ class Player {
     width: number;
     height: number;
     position;
-   
+
 
 
     constructor() {
@@ -113,7 +113,7 @@ class Invader {
     currentDist: number = 800;
     filter;
     filterVal: number = 3000;
-     // Add a lane property to the Invader class
+    // Add a lane property to the Invader class
     lane: LANE;
 
 
@@ -127,6 +127,8 @@ class Invader {
             y: 1,
         };
 
+        console.log(this.lane, initialLane);
+
         //set Image element to draw the dino
         this.image = new Image();
         this.image.src = './IMG/Dino.png';
@@ -135,14 +137,14 @@ class Invader {
         const scale = 0.05;
         this.width = this.image.width * scale;
         this.height = this.image.height * scale;
-        
+
 
 
         //set the position
-         this.position = {
+        this.position = {
             x: canvas.width / 2 - this.width / 2,
             y: canvas.height / 5
-        }; 
+        };
 
         //create new Audio Element and set the source to the rawr sound
         this.sound = new Audio();
@@ -180,22 +182,6 @@ class Invader {
 
     draw() {
         if (this.image && this.lane === currentLane) {
-            // Scale based on vertical position
-            const scale = 1 + (this.position.y / canvas.height) * 0.02;
-
-            //apply scale to width and height 
-            this.width = this.width * scale;
-            this.height = this.height * scale;
-
-            //make sure dino stays in the middle of the screen
-            this.position.x = canvas.width / 2 - this.width / 2;
-         
-
-            //if the dino is wider than the canvas, make it despawn
-            if (this.width >= canvas.width) {
-                invaders.splice(0, 1);
-            }
-
             //draw the dino
             c.drawImage(
                 this.image,
@@ -205,6 +191,21 @@ class Invader {
                 this.height
             );
             this.playSound();
+        }
+        // Scale based on vertical position
+        const scale = 1 + (this.position.y / canvas.height) * 0.02;
+
+        //apply scale to width and height 
+        this.width = this.width * scale;
+        this.height = this.height * scale;
+
+        //make sure dino stays in the middle of the screen
+        this.position.x = canvas.width / 2 - this.width / 2;
+
+
+        //if the dino is wider than the canvas, make it despawn
+        if (this.width >= canvas.width) {
+            invaders.splice(0, 1);
         }
     }
 
@@ -273,13 +274,8 @@ class Cloud {
 function createInvaders() {
     // Function to spawn the dinos
     if (invaders.length === 0) {
-     
-
-
         // Create a new invader with the selected lane
         const invader = new Invader(currentLane);
-
-        
 
         invaders.push(invader);
 
@@ -287,7 +283,7 @@ function createInvaders() {
         console.log("hello dino");
     }
 }
-        
+
 
 
 function randomInterval(): void {
@@ -321,9 +317,8 @@ function animate() {
 
     invaders.forEach((invader) => {
         // Check if the invader is on the same lane as the player before drawing
-        if (invader.lane === currentLane) {
-            invader.draw();
-        }
+        invader.draw();
+
     });
 
     /* // Update all invaders' positions

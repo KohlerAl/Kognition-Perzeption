@@ -95,6 +95,7 @@ class Invader {
             x: 0,
             y: 1,
         };
+        console.log(this.lane, initialLane);
         //set Image element to draw the dino
         this.image = new Image();
         this.image.src = './IMG/Dino.png';
@@ -133,20 +134,20 @@ class Invader {
     }
     draw() {
         if (this.image && this.lane === currentLane) {
-            // Scale based on vertical position
-            const scale = 1 + (this.position.y / canvas.height) * 0.02;
-            //apply scale to width and height 
-            this.width = this.width * scale;
-            this.height = this.height * scale;
-            //make sure dino stays in the middle of the screen
-            this.position.x = canvas.width / 2 - this.width / 2;
-            //if the dino is wider than the canvas, make it despawn
-            if (this.width >= canvas.width) {
-                invaders.splice(0, 1);
-            }
             //draw the dino
             c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);
             this.playSound();
+        }
+        // Scale based on vertical position
+        const scale = 1 + (this.position.y / canvas.height) * 0.02;
+        //apply scale to width and height 
+        this.width = this.width * scale;
+        this.height = this.height * scale;
+        //make sure dino stays in the middle of the screen
+        this.position.x = canvas.width / 2 - this.width / 2;
+        //if the dino is wider than the canvas, make it despawn
+        if (this.width >= canvas.width) {
+            invaders.splice(0, 1);
         }
     }
     playSound() {
@@ -231,9 +232,7 @@ function animate() {
     player.draw();
     invaders.forEach((invader) => {
         // Check if the invader is on the same lane as the player before drawing
-        if (invader.lane === currentLane) {
-            invader.draw();
-        }
+        invader.draw();
     });
     /* // Update all invaders' positions
     invaders.forEach((invader) => {
