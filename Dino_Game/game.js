@@ -85,8 +85,9 @@ class Invader {
     currentDist = 800;
     filter;
     filterVal = 3000;
-    initialLane;
-    constructor(initialLane) {
+    // Add a lane property to the Invader class
+    lane;
+    constructor(lane) {
         //walk toward the bottom
         this.velocity = {
             x: 0,
@@ -99,17 +100,18 @@ class Invader {
         const scale = 0.05;
         this.width = this.image.width * scale;
         this.height = this.image.height * scale;
-        this.initialLane = initialLane;
-        // Set the position based on the initial lane
+        // Assign the lane when the invader is created
+        this.lane = lane;
+        /* // Set the position based on the initial lane
         this.position = {
             x: (initialLane === LANE.LEFT ? canvas.width / 4 : (initialLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - this.width / 2,
             y: canvas.height / 5
-        };
+        }; */
         //set the position
-        /*  this.position = {
-             x: canvas.width / 2 - this.width / 2,
-             y: canvas.height / 5
-         }; */
+        this.position = {
+            x: canvas.width / 2 - this.width / 2,
+            y: canvas.height / 5
+        };
         //create new Audio Element and set the source to the rawr sound
         this.sound = new Audio();
         this.sound.src = './SOUND/rawr.mp3';
@@ -143,8 +145,8 @@ class Invader {
             this.height = this.height * scale;
             //make sure dino stays in the middle of the screen
             this.position.x = canvas.width / 2 - this.width / 2;
-            // Make sure dino stays in the initial lane
-            this.position.x = (this.initialLane === LANE.LEFT ? canvas.width / 4 : (this.initialLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - this.width / 2;
+            /*  // Make sure dino stays in the initial lane
+         this.position.x = (this.initialLane === LANE.LEFT ? canvas.width / 4 : (this.initialLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - this.width / 2; */
             //if the dino is wider than the canvas, make it despawn
             if (this.width >= canvas.width) {
                 invaders.splice(0, 1);
@@ -200,14 +202,12 @@ class Cloud {
     }
 }
 function createInvaders() {
-    //function to spawn the dinos
-    /* if (invaders.length == 0) {
-        invaders.push(new Invader(currentLane)); // Pass the player's current lane
-        //invaders.push(new Invader());
-        console.log("hello dino") */
-    // function to spawn the dinos
-    if (invaders.length === 0 && currentLane === LANE.MIDDLE) {
-        invaders.push(new Invader(currentLane)); // Pass the player's current lane
+    // Function to spawn the dinos
+    if (invaders.length === 0) {
+        // Create an invader in each lane
+        invaders.push(new Invader(LANE.LEFT));
+        invaders.push(new Invader(LANE.MIDDLE));
+        invaders.push(new Invader(LANE.RIGHT));
         console.log("hello dino");
     }
 }
