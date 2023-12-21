@@ -137,13 +137,6 @@ class Invader {
         this.height = this.image.height * scale;
         
 
-       
-
-         // Set the position based on the initial lane
-        this.position = {
-            x: (initialLane === LANE.LEFT ? canvas.width / 4 : (initialLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - this.width / 2,
-            y: canvas.height / 5
-        }; 
 
         //set the position
          this.position = {
@@ -196,8 +189,7 @@ class Invader {
 
             //make sure dino stays in the middle of the screen
             this.position.x = canvas.width / 2 - this.width / 2;
-           /*  // Make sure dino stays in the initial lane
-        this.position.x = (this.initialLane === LANE.LEFT ? canvas.width / 4 : (this.initialLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - this.width / 2; */
+         
 
             //if the dino is wider than the canvas, make it despawn
             if (this.width >= canvas.width) {
@@ -281,16 +273,13 @@ class Cloud {
 function createInvaders() {
     // Function to spawn the dinos
     if (invaders.length === 0) {
-        // Define the possible lanes
-        const laneOptions = [LANE.LEFT, LANE.MIDDLE, LANE.RIGHT];
-        // Randomly select a lane
-        const selectedLane = laneOptions[Math.floor(Math.random() * laneOptions.length)];
+     
+
 
         // Create a new invader with the selected lane
-        const invader = new Invader(selectedLane);
+        const invader = new Invader(currentLane);
 
-         // Set the initial position based on the selected lane
-         invader.position.x = (selectedLane === LANE.LEFT ? canvas.width / 4 : (selectedLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - invader.width / 2;
+        
 
         invaders.push(invader);
 
