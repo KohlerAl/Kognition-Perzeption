@@ -87,7 +87,9 @@ class Invader {
     filterVal = 3000;
     // Add a lane property to the Invader class
     lane;
-    constructor(lane) {
+    constructor(initialLane) {
+        // Assign the lane when the invader is created
+        this.lane = initialLane;
         //walk toward the bottom
         this.velocity = {
             x: 0,
@@ -100,13 +102,11 @@ class Invader {
         const scale = 0.05;
         this.width = this.image.width * scale;
         this.height = this.image.height * scale;
-        // Assign the lane when the invader is created
-        this.lane = lane;
-        /* // Set the position based on the initial lane
+        // Set the position based on the initial lane
         this.position = {
             x: (initialLane === LANE.LEFT ? canvas.width / 4 : (initialLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - this.width / 2,
             y: canvas.height / 5
-        }; */
+        };
         //set the position
         this.position = {
             x: canvas.width / 2 - this.width / 2,
@@ -137,7 +137,7 @@ class Invader {
         this.filter.frequency.setTargetAtTime(this.filterVal, this.audioContext.currentTime, 0);
     }
     draw() {
-        if (this.image) {
+        if (this.image && this.lane === currentLane) {
             // Scale based on vertical position
             const scale = 1 + (this.position.y / canvas.height) * 0.02;
             //apply scale to width and height 
@@ -204,10 +204,16 @@ class Cloud {
 function createInvaders() {
     // Function to spawn the dinos
     if (invaders.length === 0) {
-        // Create an invader in each lane
-        invaders.push(new Invader(LANE.LEFT));
-        invaders.push(new Invader(LANE.MIDDLE));
-        invaders.push(new Invader(LANE.RIGHT));
+        // Define the possible lanes
+        const laneOptions = [LANE.LEFT, LANE.MIDDLE, LANE.RIGHT];
+        // Randomly select a lane
+        const selectedLane = laneOptions[Math.floor(Math.random() * laneOptions.length)];
+        // Create a new invader with the selected lane
+        const invader = new Invader(selectedLane);
+        // Set the initial position based on the selected lane
+        invader.position.x = (selectedLane === LANE.LEFT ? canvas.width / 4 : (selectedLane === LANE.MIDDLE ? canvas.width / 2 : 3 * canvas.width / 4)) - invader.width / 2;
+        invaders.push(invader);
+        /* invaders.push(new Invader(currentLane)); */
         console.log("hello dino");
     }
 }
@@ -236,10 +242,16 @@ function animate() {
     clouds.forEach(cloud => cloud.draw());
     // Draw player
     player.draw();
-    // Update all invaders' positions
+    invaders.forEach((invader) => {
+        // Check if the invader is on the same lane as the player before drawing
+        if (invader.lane === currentLane) {
+            invader.draw();
+        }
+    });
+    /* // Update all invaders' positions
     invaders.forEach((invader) => {
         invader.draw();
-    });
+    }); */
 }
 // Handle keyboard input
 // Depending on the pressed key, change the current lane
