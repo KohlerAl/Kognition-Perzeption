@@ -202,6 +202,10 @@ class Invader {
         //make sure dino stays in the middle of the screen
         this.position.x = canvas.width / 2 - this.width / 2;
 
+        if(this.position.x < canvas.width / 4 && this.lane === currentLane) {
+            console.log("collision"); 
+        }
+
 
         //if the dino is wider than the canvas, make it despawn
         if (this.width >= canvas.width) {
