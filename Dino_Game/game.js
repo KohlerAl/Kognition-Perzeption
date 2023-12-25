@@ -52,6 +52,7 @@ function handleLoad() {
 }
 function startGame() {
     //set canvas width and height to window width and height
+    window.addEventListener("devicemotion", onDeviceMotion);
     canvas = document.querySelector('canvas');
     c = canvas.getContext('2d');
     canvas.width = window.innerWidth;
@@ -443,6 +444,7 @@ function handleCollision() {
     }
     // Decrease lives
     player.lives--;
+    invaders.splice(0, 1);
     /* // Remove the invader that had a collision
     const index = invaders.indexOf(collidedInvader);
     if (index !== -1) {

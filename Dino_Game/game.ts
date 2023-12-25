@@ -65,6 +65,7 @@ function handleLoad(): void {
 
 function startGame(): void {
     //set canvas width and height to window width and height
+    window.addEventListener("devicemotion", onDeviceMotion);
     canvas = <HTMLCanvasElement>document.querySelector('canvas');
     c = <CanvasRenderingContext2D>canvas.getContext('2d');
 
@@ -563,6 +564,7 @@ function handleCollision(): void {
     }
     // Decrease lives
     player.lives--;
+    invaders.splice(0, 1);
 
 
 
