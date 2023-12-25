@@ -2,6 +2,18 @@ let canvas: HTMLCanvasElement;
 let c: CanvasRenderingContext2D;
 let currentPoints: number;
 
+let imagestoDraw: HTMLImageElement[] = [];
+
+let startScreenDiv: HTMLDivElement;
+
+let rail1 = new Image();
+let rail2 = new Image();
+let rail3 = new Image();
+let sun = new Image();
+let ground = new Image();
+let tree1 = new Image();
+let tree2 = new Image();
+let tree3 = new Image();
 
 //Lanes 
 //enum can only have set values (in this case left, middle, right)
@@ -30,6 +42,20 @@ window.addEventListener("load", handleLoad);
 function handleLoad(): void {
     let btn: HTMLButtonElement = <HTMLButtonElement>document.querySelector("button");
     btn.addEventListener("pointerdown", startGame);
+
+    startScreenDiv = document.getElementById("start") as HTMLDivElement;
+
+    startScreenDiv.style.display = "block";
+    setOverlayText("touch screen to start");
+
+    startScreenDiv.addEventListener("click", () => {
+        setOverlayText("checking for motion sensors...");
+        const deviceMotionPromise = requestDeviceMotion();
+
+        Promise.all([deviceMotionPromise])
+            .then(() => startScreenDiv.style.display = "none") // close start screen (everything is ok)
+            .catch((error) => setOverlayError(error)); // display error
+    });
 }
 
 
@@ -52,6 +78,18 @@ function startGame(): void {
     clouds.push(new Cloud(canvas.width / 3, 100, 1));
     clouds.push(new Cloud(canvas.width / 2, 200, 2));
 
+    /* rail1.src = './IMG/Rail1.png'; 
+    rail2.src = './IMG/Rail2.png'; 
+    rail3.src = './IMG/Rail3.png'; 
+    sun.src = './IMG/Sonne_1.png';  */
+    ground.src = './IMG/Ground.png';
+    /* tree1.src = './IMG/Tree1.png'; 
+    tree2.src = './IMG/Tree2.png'; 
+    tree3.src = './IMG/Tree3.png';  */
+
+    /* imagestoDraw = [rail1, rail2, rail3, sun, ground, tree1, tree2, tree3]; 
+    console.log(ground) */
+
     //create player
     player = new Player();
 
@@ -61,7 +99,7 @@ function startGame(): void {
     //call function animate every 25ms
     window.setInterval(function (): void {
         animate();
-    }, 25)
+    }, 35)
 
     window.setInterval(function (): void {
         currentPoints += 1;
@@ -101,7 +139,15 @@ class Player {
 class Invader {
     //declare variables
     velocity;
+
+    //Get Images for left and right step
     image: HTMLImageElement;
+
+    imageLeft: HTMLImageElement;
+    imageRight: HTMLImageElement;
+    currentImgIsLeft: boolean = true;
+    counter: number = 0;
+
     width: number;
     height: number;
     position;
@@ -133,12 +179,15 @@ class Invader {
         this.image = new Image();
         this.image.src = './IMG/Dino.png';
 
+        this.imageLeft = new Image();
+        this.imageRight = new Image();
+        this.imageLeft.src = './IMG/Dino_Walk1.png';
+        this.imageRight.src = './IMG/Dino_Walk2.png';
+
         //scale the image
         const scale = 0.05;
         this.width = this.image.width * scale;
         this.height = this.image.height * scale;
-
-
 
         //set the position
         this.position = {
@@ -183,13 +232,24 @@ class Invader {
     draw() {
         if (this.image && this.lane === currentLane) {
             //draw the dino
-            c.drawImage(
-                this.image,
-                this.position.x,
-                this.position.y,
-                this.width,
-                this.height
-            );
+            if (this.currentImgIsLeft) {
+                c.drawImage(
+                    this.imageLeft,
+                    this.position.x,
+                    this.position.y,
+                    this.width,
+                    this.height
+                );
+            }
+            else if (!this.currentImgIsLeft) {
+                c.drawImage(
+                    this.imageRight,
+                    this.position.x,
+                    this.position.y,
+                    this.width,
+                    this.height
+                );
+            }
             this.playSound();
         }
         // Scale based on vertical position
@@ -199,11 +259,21 @@ class Invader {
         this.width = this.width * scale;
         this.height = this.height * scale;
 
+        this.counter++;
+        if (this.counter == 20 && this.currentImgIsLeft) {
+            this.counter = 0;
+            this.currentImgIsLeft = false;
+        }
+        else if (this.counter == 20 && !this.currentImgIsLeft) {
+            this.counter = 0;
+            this.currentImgIsLeft = true;
+        }
+
         //make sure dino stays in the middle of the screen
         this.position.x = canvas.width / 2 - this.width / 2;
 
-        if(this.position.x < canvas.width / 4 && this.lane === currentLane) {
-            console.log("collision"); 
+        if (this.position.x < canvas.width / 4 && this.lane === currentLane) {
+            console.log("collision");
         }
 
 
@@ -304,20 +374,23 @@ function animate() {
     //change the background color according to the current lane
     if (currentLane == LANE.MIDDLE) {
         c.fillStyle = '#BCE5E7';
+        c.fillRect(0, 0, canvas.width, canvas.height);
+        /* c.drawImage(ground, 100, 100, 100, 100) */
     }
     else if (currentLane == LANE.LEFT) {
-        c.fillStyle = '#800080';
+        c.fillStyle = 'red';
+        c.fillRect(0, 0, canvas.width, canvas.height);
     }
     else if (currentLane == LANE.RIGHT) {
-        c.fillStyle = '#00FF00';
+        c.fillStyle = 'blue';
+        c.fillRect(0, 0, canvas.width, canvas.height);
     }
-    c.fillRect(0, 0, canvas.width, canvas.height);
 
     // Draw clouds (because they were drawn over with the background)
     clouds.forEach(cloud => cloud.draw());
 
     // Draw player
-    player.draw();
+    /*     player.draw(); */
 
     invaders.forEach((invader) => {
         // Check if the invader is on the same lane as the player before drawing
@@ -335,7 +408,11 @@ function animate() {
 // Handle keyboard input
 // Depending on the pressed key, change the current lane
 addEventListener('keydown', ({ key }) => {
-    switch (key) {
+    
+});
+
+function switchLanes(dir: string): void {
+    switch (dir) {
         case 'a':
             if (currentLane == LANE.MIDDLE || currentLane == LANE.RIGHT) {
                 if (currentLane == LANE.MIDDLE) {
@@ -357,4 +434,104 @@ addEventListener('keydown', ({ key }) => {
             }
             break;
     }
-});
+}
+
+function setOverlayText(text: string) {
+    startScreenDiv.classList.remove("error");
+    startScreenDiv.innerHTML = text;
+}
+
+// display error message on start screen
+function setOverlayError(text: string) {
+    startScreenDiv.classList.add("error");
+    startScreenDiv.innerHTML = text;
+}
+
+
+let dataStreamTimeout: NodeJS.Timeout | null = null;
+let dataStreamResolve: (() => void) | null = null;
+let scaleAcc = 1; // scale factor to re-invert iOS acceleration
+
+// get promise for device motion check and start
+function requestDeviceMotion() {
+    return new Promise<void>((resolve, reject) => {
+        dataStreamResolve = resolve;
+
+        // set timeout in case that the API is ok, but no data is sent
+        dataStreamTimeout = setTimeout(() => {
+            dataStreamTimeout = null;
+            reject("no device motion/orientation data streams");
+        }, 1000);
+
+        if (DeviceMotionEvent || DeviceOrientationEvent) {
+            if (DeviceMotionEvent.requestPermission || DeviceOrientationEvent.requestPermission) {
+                // ask device motion/orientation permission on iOS
+                DeviceMotionEvent.requestPermission()
+                    .then((response: any) => {
+                        if (response == "granted") {
+                            // got permission
+                            window.addEventListener("devicemotion", onDeviceMotion);
+                            resolve();
+                            scaleAcc = -1; // re-invert inverted iOS acceleration values
+                        } else {
+                            reject("no permission for device motion");
+                        }
+                    })
+                    .catch(console.error);
+            } else {
+                // no permission needed on non-iOS devices
+                window.addEventListener("devicemotion", onDeviceMotion);
+            }
+        } else {
+            reject("device motion/orientation not available");
+        }
+    });
+}
+
+const defaultThreshold = 1.5;
+let filterCoeff: number | null = null;
+let lastFilteredAcc = 0;
+let lastDiffAcc: number | null = null;
+let leftPeak = 0;
+let rightPeak = 0;
+
+function onDeviceMotion(e: DeviceMotionEvent) {
+    if (dataStreamTimeout !== null && dataStreamResolve !== null) {
+        dataStreamResolve();
+        clearTimeout(dataStreamTimeout);
+    }
+
+    const acc = scaleAcc * e.acceleration.x;
+    const currentFilteredAcc = filterCoeff as number * lastFilteredAcc + (1 - filterCoeff as number) * acc;
+    const currentDiffAcc = currentFilteredAcc - lastFilteredAcc;
+
+    // init filterCoeff with sensor interval
+    if (filterCoeff === null) {
+        filterCoeff = Math.exp(-2.0 * Math.PI * e.interval! / 2);
+    }
+
+    // init lastDiffAcc
+    if (lastDiffAcc === null) {
+        lastDiffAcc = currentDiffAcc;
+    }
+
+    if (currentFilteredAcc < -defaultThreshold && lastDiffAcc < 0 && currentDiffAcc >= 0) {
+        // register left kick (negative acc minimum)
+        leftPeak = currentFilteredAcc;
+
+        // trigger on left kick but not on right stop
+        const threshold = Math.min(-defaultThreshold, -0.666 * rightPeak);
+        if (currentFilteredAcc < threshold) {
+            switchLanes("a");
+        }
+    } else if (currentFilteredAcc >= defaultThreshold && lastDiffAcc >= 0 && currentDiffAcc < 0) {
+        // register right kick (positive acc maximum)
+        rightPeak = currentFilteredAcc;
+
+        // trigger on right kick but not on left stop
+        const threshold = Math.max(defaultThreshold, -0.666 * leftPeak);
+        if (currentFilteredAcc >= threshold) {
+            switchLanes("b");
+        }
+    }
+}
