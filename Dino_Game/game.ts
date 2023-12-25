@@ -1,13 +1,13 @@
 let canvas: HTMLCanvasElement;
 let c: CanvasRenderingContext2D;
 let currentPoints: number;
-let lives: number = 3;
-let elapsedTime: number = 0;
-let isGameOver: boolean = false;
 
 let imagestoDraw: HTMLImageElement[] = [];
 
 let startScreenDiv: HTMLDivElement;
+let lives: number = 3;
+let elapsedTime: number = 0;
+let isGameOver: boolean = false;
 
 let rail1 = new Image();
 let rail2 = new Image();
@@ -114,9 +114,8 @@ class Player {
     width: number;
     height: number;
     position;
+    
     lives: number;
-
-
 
     constructor() {
         this.width = 50; // Set the width of the player
@@ -137,9 +136,7 @@ class Player {
             this.position.y,
             this.width,
             this.height
-        );
-
-        // Draw lives in the UI
+        ); 
         drawLives();
     }
 }
@@ -280,9 +277,7 @@ class Invader {
         //make sure dino stays in the middle of the screen
         this.position.x = canvas.width / 2 - this.width / 2;
 
-
-        if(this.position.x < canvas.width / 4 && this.lane === currentLane) {
-            //console.log("collision"); 
+        if (this.position.x < canvas.width / 4 && this.lane === currentLane) {
             handleCollision(); // Function to handle collision
         }
 
@@ -380,68 +375,6 @@ function randomInterval(): void {
     func();
 }
 
-function handleCollision(): void {
-
-    // Check if the game is already over
-    if (isGameOver) {
-        return;
-    }
-    // Decrease lives
-    player.lives--;
-
-  
-
-    /* // Remove the invader that had a collision
-    const index = invaders.indexOf(collidedInvader);
-    if (index !== -1) {
-        invaders.splice(index, 1);
-    } */
-    // Display the number of lives in the UI
-    drawLives(); 
-    
-     // Set a delay before checking for a game over
-     setTimeout(() => {
-    // Check if the game is over
-        if (player.lives <= 0) {
-            gameOver();
-         } 
-    }, 500); // Adjust the delay 
-}
-
-function gameOver() {
-     isGameOver = true;
-    //actions to perform when the game is over
-    alert('Game Over!'); // For example, display an alert
-    resetGame(); // Reset the game
-}
-
-function drawLives() {
-    // Display the number of lives in the UI
-    c.font = "20px Arial";
-    c.fillStyle = "white";
-    c.fillText("Lives: " + player.lives, 10, 30);
-}
-
-function resetGame(): void {
-    // Remove existing invaders
-    invaders.length = 0;
-
-    // Clear the canvas
-    c.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Reset player lives
-    player.lives = 3;
-
-    // Reset the timer
-    elapsedTime = 0;
-
-    // Additional reset logic here...
-
-    // Restart continuous spawning of invaders
-    randomInterval();
-}
-
-
 function animate() {
     //change the background color according to the current lane
     if (currentLane == LANE.MIDDLE) {
@@ -468,13 +401,13 @@ function animate() {
         // Check if the invader is on the same lane as the player before drawing
         invader.draw();
 
+    });
+
     elapsedTime += 0.025;
     c.font = "20px Arial";
     c.fillStyle = "white";
     c.fillText("Time: " + Math.floor(elapsedTime) + "s", 10, 60);
 
-
-    });
 
     /* // Update all invaders' positions
     invaders.forEach((invader) => {
@@ -612,4 +545,65 @@ function onDeviceMotion(e: DeviceMotionEvent) {
             switchLanes("b");
         }
     }
+}
+
+function handleCollision(): void {
+
+    // Check if the game is already over
+    if (isGameOver) {
+        return;
+    }
+    // Decrease lives
+    player.lives--;
+
+  
+
+    /* // Remove the invader that had a collision
+    const index = invaders.indexOf(collidedInvader);
+    if (index !== -1) {
+        invaders.splice(index, 1);
+    } */
+    // Display the number of lives in the UI
+    drawLives(); 
+    
+     // Set a delay before checking for a game over
+     setTimeout(() => {
+    // Check if the game is over
+        if (player.lives <= 0) {
+            gameOver();
+         } 
+    }, 500); // Adjust the delay 
+}
+
+function gameOver() {
+     isGameOver = true;
+    //actions to perform when the game is over
+    alert('Game Over!'); // For example, display an alert
+    resetGame(); // Reset the game
+}
+
+function drawLives() {
+    // Display the number of lives in the UI
+    c.font = "20px Arial";
+    c.fillStyle = "white";
+    c.fillText("Lives: " + player.lives, 10, 30);
+}
+
+function resetGame(): void {
+    // Remove existing invaders
+    invaders.length = 0;
+
+    // Clear the canvas
+    c.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Reset player lives
+    player.lives = 3;
+
+    // Reset the timer
+    elapsedTime = 0;
+
+    // Additional reset logic here...
+
+    // Restart continuous spawning of invaders
+    randomInterval();
 }
