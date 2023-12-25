@@ -408,6 +408,7 @@ function animate() {
     c.font = "20px Arial";
     c.fillStyle = "white";
     c.fillText("Time: " + Math.floor(elapsedTime) + "s", 10, 60);
+    drawLives();
 
     /* // Update all invaders' positions
     invaders.forEach((invader) => {
