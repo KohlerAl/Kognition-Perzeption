@@ -48,8 +48,9 @@ function handleLoad(): void {
 
     startScreenDiv = document.getElementById("start") as HTMLDivElement;
 
-    startScreenDiv.style.display = "block";
-    setOverlayText("touch screen to start");
+    /* startScreenDiv.style.display = "block";
+    startScreenDiv.style.height = window.innerHeight + "px"; 
+    setOverlayText("touch screen to start"); */
 
     /* startScreenDiv.addEventListener("click", () => {
         setOverlayText("checking for motion sensors...");
@@ -481,9 +482,9 @@ function requestDeviceMotion() {
         }, 1000);
 
         if (DeviceMotionEvent || DeviceOrientationEvent) {
-            if (DeviceMotionEvent.requestPermission || DeviceOrientationEvent.requestPermission) {
+            if ((DeviceMotionEvent as any).requestPermission || (DeviceOrientationEvent as any).requestPermission) {
                 // ask device motion/orientation permission on iOS
-                DeviceMotionEvent.requestPermission()
+                (DeviceMotionEvent as any).requestPermission()
                     .then((response: any) => {
                         if (response == "granted") {
                             // got permission

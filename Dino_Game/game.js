@@ -38,8 +38,9 @@ function handleLoad() {
     let btn = document.querySelector("button");
     btn.addEventListener("pointerdown", startGame);
     startScreenDiv = document.getElementById("start");
-    startScreenDiv.style.display = "block";
-    setOverlayText("touch screen to start");
+    /* startScreenDiv.style.display = "block";
+    startScreenDiv.style.height = window.innerHeight + "px";
+    setOverlayText("touch screen to start"); */
     /* startScreenDiv.addEventListener("click", () => {
         setOverlayText("checking for motion sensors...");
         const deviceMotionPromise = requestDeviceMotion();
