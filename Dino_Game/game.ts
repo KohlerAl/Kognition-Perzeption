@@ -408,7 +408,6 @@ function animate() {
     c.fillStyle = "white";
     c.fillText("Time: " + Math.floor(elapsedTime) + "s", 10, 60);
 
-
     /* // Update all invaders' positions
     invaders.forEach((invader) => {
         invader.draw();
