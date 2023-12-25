@@ -40,13 +40,14 @@ function handleLoad() {
     startScreenDiv = document.getElementById("start");
     startScreenDiv.style.display = "block";
     setOverlayText("touch screen to start");
-    startScreenDiv.addEventListener("click", () => {
+    /* startScreenDiv.addEventListener("click", () => {
         setOverlayText("checking for motion sensors...");
         const deviceMotionPromise = requestDeviceMotion();
+
         Promise.all([deviceMotionPromise])
             .then(() => startScreenDiv.style.display = "none") // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
-    });
+    }); */
 }
 function startGame() {
     //set canvas width and height to window width and height
@@ -66,7 +67,7 @@ function startGame() {
     rail2.src = './IMG/Rail2.png';
     rail3.src = './IMG/Rail3.png';
     sun.src = './IMG/Sonne_1.png';  */
-    ground.src = './IMG/Ground.png';
+    /* ground.src = './IMG/Ground.png'; */
     /* tree1.src = './IMG/Tree1.png';
     tree2.src = './IMG/Tree2.png';
     tree3.src = './IMG/Tree3.png';  */
@@ -311,6 +312,14 @@ function animate() {
 // Handle keyboard input
 // Depending on the pressed key, change the current lane
 addEventListener('keydown', ({ key }) => {
+    switch (key) {
+        case "a":
+            switchLanes("a");
+            break;
+        case "d":
+            switchLanes("d");
+            break;
+    }
 });
 function switchLanes(dir) {
     switch (dir) {

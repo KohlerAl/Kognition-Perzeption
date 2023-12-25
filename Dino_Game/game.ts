@@ -51,14 +51,14 @@ function handleLoad(): void {
     startScreenDiv.style.display = "block";
     setOverlayText("touch screen to start");
 
-    startScreenDiv.addEventListener("click", () => {
+    /* startScreenDiv.addEventListener("click", () => {
         setOverlayText("checking for motion sensors...");
         const deviceMotionPromise = requestDeviceMotion();
 
         Promise.all([deviceMotionPromise])
             .then(() => startScreenDiv.style.display = "none") // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
-    });
+    }); */
 }
 
 
@@ -85,7 +85,7 @@ function startGame(): void {
     rail2.src = './IMG/Rail2.png'; 
     rail3.src = './IMG/Rail3.png'; 
     sun.src = './IMG/Sonne_1.png';  */
-    ground.src = './IMG/Ground.png';
+    /* ground.src = './IMG/Ground.png'; */
     /* tree1.src = './IMG/Tree1.png'; 
     tree2.src = './IMG/Tree2.png'; 
     tree3.src = './IMG/Tree3.png';  */
@@ -114,7 +114,7 @@ class Player {
     width: number;
     height: number;
     position;
-    
+
     lives: number;
 
     constructor() {
@@ -136,7 +136,7 @@ class Player {
             this.position.y,
             this.width,
             this.height
-        ); 
+        );
         drawLives();
     }
 }
@@ -418,7 +418,14 @@ function animate() {
 // Handle keyboard input
 // Depending on the pressed key, change the current lane
 addEventListener('keydown', ({ key }) => {
-    
+    switch (key) {
+        case "a":
+            switchLanes("a");
+            break;
+        case "d":
+            switchLanes("d");
+            break;
+    }
 });
 
 function switchLanes(dir: string): void {
@@ -555,7 +562,7 @@ function handleCollision(): void {
     // Decrease lives
     player.lives--;
 
-  
+
 
     /* // Remove the invader that had a collision
     const index = invaders.indexOf(collidedInvader);
@@ -563,19 +570,19 @@ function handleCollision(): void {
         invaders.splice(index, 1);
     } */
     // Display the number of lives in the UI
-    drawLives(); 
-    
-     // Set a delay before checking for a game over
-     setTimeout(() => {
-    // Check if the game is over
+    drawLives();
+
+    // Set a delay before checking for a game over
+    setTimeout(() => {
+        // Check if the game is over
         if (player.lives <= 0) {
             gameOver();
-         } 
+        }
     }, 500); // Adjust the delay 
 }
 
 function gameOver() {
-     isGameOver = true;
+    isGameOver = true;
     //actions to perform when the game is over
     alert('Game Over!'); // For example, display an alert
     resetGame(); // Reset the game
