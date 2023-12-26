@@ -409,7 +409,7 @@ function requestDeviceMotion() {
     });
 }
 
-const defaultThreshold = 4;
+const defaultThreshold = 2.5;
 let filterCoeff = null;
 let lastFilteredAcc = 0;
 let lastDiffAcc = null;
