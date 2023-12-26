@@ -18,6 +18,8 @@ let tree1 = new Image();
 let tree2 = new Image();
 let tree3 = new Image();
 
+let startScreenTextDiv; 
+
 // Lanes
 const LANE = {
     LEFT: 0,
@@ -40,6 +42,7 @@ function handleLoad() {
     btn.addEventListener("pointerdown", startGame);
 
     startScreenDiv = document.getElementById("start");
+    startScreenDiv.querySelector("p");
 
     startScreenDiv.style.display = "block";
     startScreenDiv.style.height = window.innerHeight + "px";
@@ -358,13 +361,13 @@ function switchLanes(dir) {
 }
 
 function setOverlayText(text) {
-    startScreenDiv.classList.remove("error");
-    startScreenDiv.innerHTML = text;
+    startScreenTextDiv.classList.remove("error");
+    startScreenTextDiv.innerHTML = text;
 }
 
 function setOverlayError(text) {
-    startScreenDiv.classList.add("error");
-    startScreenDiv.innerHTML = text;
+    startScreenTextDiv.classList.add("error");
+    startScreenTextDiv.innerHTML = text;
 }
 
 let dataStreamTimeout = null;
