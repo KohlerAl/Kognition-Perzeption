@@ -402,6 +402,8 @@ function requestDeviceMotion() {
         }
     });
 }
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+const audioContext = new AudioContext();
 
 function requestWebAudio() {
     return new Promise((resolve, reject) => {
