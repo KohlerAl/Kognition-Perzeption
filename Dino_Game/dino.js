@@ -53,9 +53,8 @@ function handleLoad() {
     btn.addEventListener("pointerdown", () => {
         setOverlayText("checking for motion sensors...");
         const deviceMotionPromise = requestDeviceMotion();
-        const audioPromise = requestWebAudio();
 
-        Promise.all([deviceMotionPromise, audioPromise])
+        Promise.all([deviceMotionPromise])
             .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
     });
