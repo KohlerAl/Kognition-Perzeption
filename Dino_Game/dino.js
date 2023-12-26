@@ -133,8 +133,6 @@ class Invader {
             y: 1,
         };
 
-        console.log(this.lane, initialLane);
-
         this.image = new Image();
         this.image.src = './IMG/Dino.png';
 
@@ -176,7 +174,6 @@ class Invader {
 
         this.filter.type = "lowpass";
         this.filterVal = 0;
-        console.log(this.filterVal, this.audioContext.currentTime);
         this.filter.frequency.setTargetAtTime(parseFloat(this.filterVal), parseFloat(this.audioContext.currentTime), parseFloat(0));
     }
 
@@ -285,8 +282,6 @@ function createInvaders() {
         const invader = new Invader(currentLane);
 
         invaders.push(invader);
-
-        console.log("hello dino");
     }
 }
 
@@ -338,7 +333,6 @@ addEventListener('keydown', ({ key }) => {
 });
 
 function switchLanes(dir) {
-    console.log(dir);
     switch (dir) {
         case 'a':
             if (currentLane == LANE.MIDDLE || currentLane == LANE.RIGHT) {
@@ -394,7 +388,6 @@ function requestDeviceMotion() {
                             window.addEventListener("devicemotion", onDeviceMotion);
                             resolve();
                             scaleAcc = -1;
-                            console.log("boop")
                         } else {
                             reject("no permission for device motion");
                         }
@@ -409,7 +402,7 @@ function requestDeviceMotion() {
     });
 }
 
-const defaultThreshold = 2.5;
+const defaultThreshold = 2;
 let filterCoeff = null;
 let lastFilteredAcc = 0;
 let lastDiffAcc = null;
