@@ -174,7 +174,7 @@ class Invader {
         this.filter.connect(this.audioContext.destination);
 
         this.filter.type = "lowpass";
-        this.filter.frequency.setTargetAtTime(parseFloat(this.filterVal), parseFloat(this.audioContext.currentTime), 0);
+        this.filter.frequency.setTargetAtTime(parseFloat(this.filterVal), parseFloat(this.audioContext.currentTime), parseFloat(0));
     }
 
     draw() {
