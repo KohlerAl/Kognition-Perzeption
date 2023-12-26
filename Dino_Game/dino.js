@@ -336,6 +336,7 @@ addEventListener('keydown', ({ key }) => {
 });
 
 function switchLanes(dir) {
+    console.log(dir); 
     switch (dir) {
         case 'a':
             if (currentLane == LANE.MIDDLE || currentLane == LANE.RIGHT) {
