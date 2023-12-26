@@ -419,6 +419,7 @@ function onDeviceMotion(e) {
         clearTimeout(dataStreamTimeout);
     }
 
+    console.log(e)
     const acc = scaleAcc * e.acceleration.x;
     const currentFilteredAcc = filterCoeff * lastFilteredAcc + (1 - filterCoeff) * acc;
     const currentDiffAcc = currentFilteredAcc - lastFilteredAcc;
