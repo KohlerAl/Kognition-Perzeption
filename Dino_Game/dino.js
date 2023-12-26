@@ -42,7 +42,8 @@ function handleLoad() {
     btn.addEventListener("pointerdown", startGame);
 
     startScreenDiv = document.getElementById("start");
-    startScreenDiv.querySelector("p");
+    startScreenTextDiv = startScreenDiv.querySelector("p");
+
 
     startScreenDiv.style.display = "block";
     startScreenDiv.style.height = window.innerHeight + "px";
