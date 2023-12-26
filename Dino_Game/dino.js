@@ -46,7 +46,7 @@ function handleLoad() {
 
     startScreenDiv.style.display = "block";
     startScreenDiv.style.height = window.innerHeight + "px";
-    setOverlayText("touch screen to start"); 
+    //setOverlayText("touch screen to start"); 
 
     btn.addEventListener("pointerdown", () => {
         setOverlayText("checking for motion sensors...");
@@ -435,6 +435,7 @@ function onDeviceMotion(e) {
 
         const threshold = Math.min(-defaultThreshold, -0.666 * rightPeak);
         if (currentFilteredAcc < threshold) {
+            console.log("hello a")
             switchLanes("a");
         }
     } else if (currentFilteredAcc >= defaultThreshold && lastDiffAcc >= 0 && currentDiffAcc < 0) {
@@ -442,7 +443,8 @@ function onDeviceMotion(e) {
 
         const threshold = Math.max(defaultThreshold, -0.666 * leftPeak);
         if (currentFilteredAcc >= threshold) {
-            switchLanes("b");
+            switchLanes("d");
+            console.log("hello d")
         }
     }
 }
