@@ -20,6 +20,8 @@ let tree3 = new Image();
 
 let startScreenTextDiv;
 
+isTimeout = false; 
+
 // Lanes
 const LANE = {
     LEFT: 0,
@@ -392,6 +394,7 @@ function requestDeviceMotion() {
                             window.addEventListener("devicemotion", onDeviceMotion);
                             resolve();
                             scaleAcc = -1;
+                            console.log("boop")
                         } else {
                             reject("no permission for device motion");
                         }
@@ -418,6 +421,9 @@ function onDeviceMotion(e) {
         dataStreamResolve();
         clearTimeout(dataStreamTimeout);
     }
+    if(isTimeout)
+        return; 
+
 
     const acc = scaleAcc * e.acceleration.x;
     const currentFilteredAcc = filterCoeff * lastFilteredAcc + (1 - filterCoeff) * acc;
@@ -441,6 +447,11 @@ function onDeviceMotion(e) {
         const threshold = Math.min(-defaultThreshold, -0.666 * rightPeak);
         if (currentFilteredAcc < threshold) {
             switchLanes("d");
+            isTimeout = true; 
+
+            window.setTimeout(function() {
+                isTimeout = false; 
+            }, 500)
         }
     } else if (currentFilteredAcc >= defaultThreshold && lastDiffAcc >= 0 && currentDiffAcc < 0) {
         // register right kick (positive acc maximum)
@@ -450,6 +461,11 @@ function onDeviceMotion(e) {
         const threshold = Math.max(defaultThreshold, -0.666 * leftPeak);
         if (currentFilteredAcc >= threshold) {
             switchLanes("a"); 
+            isTimeout = true; 
+
+            window.setTimeout(function() {
+                isTimeout = false; 
+            }, 500)
         }
     }
     lastFilteredAcc = currentFilteredAcc;
