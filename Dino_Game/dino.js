@@ -53,8 +53,9 @@ function handleLoad() {
     btn.addEventListener("pointerdown", () => {
         setOverlayText("checking for motion sensors...");
         const deviceMotionPromise = requestDeviceMotion();
+        const audioPromise = requestWebAudio();
 
-        Promise.all([deviceMotionPromise])
+        Promise.all([deviceMotionPromise, audioPromise])
             .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
     });
@@ -401,6 +402,20 @@ function requestDeviceMotion() {
         }
     });
 }
+
+function requestWebAudio() {
+    return new Promise((resolve, reject) => {
+      if (AudioContext) {
+        audioContext.resume()
+          .then(() => resolve())
+          .catch(() => reject());
+      }
+      else {
+        reject("web audio not available");
+      }
+    });
+  }
+  
 
 const defaultThreshold = 2;
 let filterCoeff = null;
