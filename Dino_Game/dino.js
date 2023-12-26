@@ -40,6 +40,7 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
+    cacheImages(["IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png"]);
     let btn = document.querySelector("button");
     btn.addEventListener("pointerdown", startGame); 
     /* startScreenDiv = document.getElementById("start");
@@ -160,10 +161,10 @@ class Invader {
         this.image = new Image();
         this.image.src = './IMG/Dino.png';
 
-        this.imageLeft = new Image();
-        this.imageRight = new Image();
-        this.imageLeft.src = './IMG/Dino_Walk1.png';
-        this.imageRight.src = './IMG/Dino_Walk2.png';
+        this.imageLeft = document.querySelector("#left");
+        this.imageRight = document.querySelector("#right");
+       /*  this.imageLeft.src = './IMG/Dino_Walk1.png';
+        this.imageRight.src = './IMG/Dino_Walk2.png'; */
 
         const scale = 0.05;
         this.width = this.image.width * scale;
@@ -244,6 +245,7 @@ class Invader {
 
         if (this.position.x < canvas.width / 4 && this.lane === currentLane) {
             handleCollision();
+            console.log("w")
         }
 
         if (this.width >= canvas.width) {
@@ -305,8 +307,10 @@ class Cloud {
 function createInvaders() {
     if (invaders.length === 0) {
         const invader = new Invader(currentLane);
-
-        invaders.push(invader);
+        invader.image.onload = function() {
+            invaders.push(invader); 
+            console.log("hello dino") 
+        }
     }
 }
 
@@ -552,3 +556,26 @@ function resetGame() {
     // Restart continuous spawning of invaders
     randomInterval();
 }
+
+function cacheImages(array)
+{
+    if (!cacheImages.list) {
+        cacheImages.list = [];
+    }
+    var list = cacheImages.list;
+    console.log(list)
+    for (var i = 0; i < array.length; i++) {
+        var img = new Image();
+        img.onload = function() {
+            var index = list.indexOf(this);
+            if (index !== -1) {
+                // remove image from the array once it's loaded
+                // for memory consumption reasons
+                list.splice(index, 1);
+            }
+        }
+        list.push(img);
+        img.src = array[i];
+    }
+}
+
