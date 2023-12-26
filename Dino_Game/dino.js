@@ -18,7 +18,7 @@ let tree1 = new Image();
 let tree2 = new Image();
 let tree3 = new Image();
 
-let startScreenTextDiv; 
+let startScreenTextDiv;
 
 // Lanes
 const LANE = {
@@ -174,7 +174,7 @@ class Invader {
 
         this.filter.type = "lowpass";
         this.filterVal = 0;
-        console.log(this.filterVal, this.audioContext.currentTime); 
+        console.log(this.filterVal, this.audioContext.currentTime);
         this.filter.frequency.setTargetAtTime(parseFloat(this.filterVal), parseFloat(this.audioContext.currentTime), parseFloat(0));
     }
 
@@ -336,7 +336,7 @@ addEventListener('keydown', ({ key }) => {
 });
 
 function switchLanes(dir) {
-    console.log(dir); 
+    console.log(dir);
     switch (dir) {
         case 'a':
             if (currentLane == LANE.MIDDLE || currentLane == LANE.RIGHT) {
@@ -423,31 +423,40 @@ function onDeviceMotion(e) {
     const currentFilteredAcc = filterCoeff * lastFilteredAcc + (1 - filterCoeff) * acc;
     const currentDiffAcc = currentFilteredAcc - lastFilteredAcc;
 
+    // init filterCoeff with sensor interval
     if (filterCoeff === null) {
         filterCoeff = Math.exp(-2.0 * Math.PI * e.interval / 2);
     }
 
+    // init lastDiffAcc
     if (lastDiffAcc === null) {
         lastDiffAcc = currentDiffAcc;
     }
 
     if (currentFilteredAcc < -defaultThreshold && lastDiffAcc < 0 && currentDiffAcc >= 0) {
+        // register left kick (negative acc minimum)
         leftPeak = currentFilteredAcc;
         console.log("hello a")
+
+        // trigger on left kick but not on right stop
         const threshold = Math.min(-defaultThreshold, -0.666 * rightPeak);
         if (currentFilteredAcc < threshold) {
-            
             switchLanes("a");
         }
     } else if (currentFilteredAcc >= defaultThreshold && lastDiffAcc >= 0 && currentDiffAcc < 0) {
+        // register right kick (positive acc maximum)
         rightPeak = currentFilteredAcc;
+
         console.log("hello d")
 
+        // trigger on right kick but not on left stop
         const threshold = Math.max(defaultThreshold, -0.666 * leftPeak);
         if (currentFilteredAcc >= threshold) {
-            switchLanes("d");
+            switchLanes("d"); 
         }
     }
+    lastFilteredAcc = currentFilteredAcc;
+    lastDiffAcc = currentDiffAcc;
 }
 
 function handleCollision() {
