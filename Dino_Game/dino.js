@@ -39,7 +39,6 @@ window.addEventListener("load", handleLoad);
 
 function handleLoad() {
     let btn = document.querySelector("button");
-    btn.addEventListener("pointerdown", startGame);
 
     startScreenDiv = document.getElementById("start");
     startScreenTextDiv = startScreenDiv.querySelector("p");
@@ -49,12 +48,12 @@ function handleLoad() {
     startScreenDiv.style.height = window.innerHeight + "px";
     setOverlayText("touch screen to start"); 
 
-    startScreenDiv.addEventListener("click", () => {
+    btn.addEventListener("pointerdown", () => {
         setOverlayText("checking for motion sensors...");
         const deviceMotionPromise = requestDeviceMotion();
 
         Promise.all([deviceMotionPromise])
-            .then(() => startScreenDiv.style.display = "none") // close start screen (everything is ok)
+            .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
     });
 }
@@ -457,6 +456,11 @@ function handleCollision() {
     invaders.splice(0, 1);
 
     drawLives();
+}
 
-
+function drawLives() {
+    // Display the number of lives in the UI
+    c.font = "20px Arial";
+    c.fillStyle = "white";
+    c.fillText("Lives: " + player.lives, 10, 30);
 }
