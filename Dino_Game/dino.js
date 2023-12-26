@@ -419,7 +419,6 @@ function onDeviceMotion(e) {
         clearTimeout(dataStreamTimeout);
     }
 
-    console.log(e)
     const acc = scaleAcc * e.acceleration.x;
     const currentFilteredAcc = filterCoeff * lastFilteredAcc + (1 - filterCoeff) * acc;
     const currentDiffAcc = currentFilteredAcc - lastFilteredAcc;
@@ -434,19 +433,19 @@ function onDeviceMotion(e) {
 
     if (currentFilteredAcc < -defaultThreshold && lastDiffAcc < 0 && currentDiffAcc >= 0) {
         leftPeak = currentFilteredAcc;
-
+        console.log("hello a")
         const threshold = Math.min(-defaultThreshold, -0.666 * rightPeak);
         if (currentFilteredAcc < threshold) {
-            console.log("hello a")
+            
             switchLanes("a");
         }
     } else if (currentFilteredAcc >= defaultThreshold && lastDiffAcc >= 0 && currentDiffAcc < 0) {
         rightPeak = currentFilteredAcc;
+        console.log("hello d")
 
         const threshold = Math.max(defaultThreshold, -0.666 * leftPeak);
         if (currentFilteredAcc >= threshold) {
             switchLanes("d");
-            console.log("hello d")
         }
     }
 }
