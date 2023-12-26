@@ -436,23 +436,20 @@ function onDeviceMotion(e) {
     if (currentFilteredAcc < -defaultThreshold && lastDiffAcc < 0 && currentDiffAcc >= 0) {
         // register left kick (negative acc minimum)
         leftPeak = currentFilteredAcc;
-        console.log("hello a")
 
         // trigger on left kick but not on right stop
         const threshold = Math.min(-defaultThreshold, -0.666 * rightPeak);
         if (currentFilteredAcc < threshold) {
-            switchLanes("a");
+            switchLanes("d");
         }
     } else if (currentFilteredAcc >= defaultThreshold && lastDiffAcc >= 0 && currentDiffAcc < 0) {
         // register right kick (positive acc maximum)
         rightPeak = currentFilteredAcc;
 
-        console.log("hello d")
-
         // trigger on right kick but not on left stop
         const threshold = Math.max(defaultThreshold, -0.666 * leftPeak);
         if (currentFilteredAcc >= threshold) {
-            switchLanes("d"); 
+            switchLanes("a"); 
         }
     }
     lastFilteredAcc = currentFilteredAcc;
