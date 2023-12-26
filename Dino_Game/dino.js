@@ -480,7 +480,17 @@ function handleCollision() {
     player.lives--;
     invaders.splice(0, 1);
 
+    if (player.lives <= 0) {
+        gameOver();
+    }
     drawLives();
+}
+
+function gameOver() {
+    isGameOver = true;
+    //actions to perform when the game is over
+    alert('Game Over!'); // For example, display an alert
+    resetGame(); // Reset the game
 }
 
 function drawLives() {
@@ -488,4 +498,23 @@ function drawLives() {
     c.font = "20px Arial";
     c.fillStyle = "white";
     c.fillText("Lives: " + player.lives, 10, 30);
+}
+
+function resetGame() {
+    // Remove existing invaders
+    invaders.length = 0;
+
+    // Clear the canvas
+    c.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Reset player lives
+    player.lives = 3;
+
+    // Reset the timer
+    elapsedTime = 0;
+
+    // Additional reset logic here...
+
+    // Restart continuous spawning of invaders
+    randomInterval();
 }
