@@ -168,9 +168,7 @@ class Invader {
         this.distortion.connect(this.audioContext.destination);
         this.distortion.curve = this.distortionCurve(this.currentDist);
 
-        this.filter;
-
-        this.filterVal = 3000;
+        this.filter = this.audioContext.createBiquadFilter();
 
         this.volume.connect(this.filter)
         this.filter.connect(this.audioContext.destination);
