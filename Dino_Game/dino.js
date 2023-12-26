@@ -41,13 +41,13 @@ window.addEventListener("load", handleLoad);
 
 function handleLoad() {
     let btn = document.querySelector("button");
-
-    startScreenDiv = document.getElementById("start");
+    btn.addEventListener("pointerdown", startGame); 
+    /* startScreenDiv = document.getElementById("start");
     startScreenTextDiv = startScreenDiv.querySelector("p");
 
 
     startScreenDiv.style.display = "block";
-    startScreenDiv.style.height = window.innerHeight + "px";
+    startScreenDiv.style.height = window.innerHeight + "px"; 
     //setOverlayText("touch screen to start"); 
 
     btn.addEventListener("pointerdown", () => {
@@ -57,7 +57,7 @@ function handleLoad() {
         Promise.all([deviceMotionPromise])
             .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
-    });
+    }); */
 }
 
 function startGame() {
@@ -125,6 +125,30 @@ class Player {
 }
 
 class Invader {
+      //declare variables
+      velocity;
+
+      //Get Images for left and right step
+      image;
+  
+      imageLeft;
+      imageRight;
+      currentImgIsLeft = true;
+      counter = 0;
+  
+      width;
+      height;
+      position;
+      sound;
+      volume;
+      audioContext;
+      source;
+      distortion;
+      currentDist = 800;
+      filter;
+      filterVal = 3000;
+      // Add a lane property to the Invader class
+      lane;
     constructor(initialLane) {
         this.lane = initialLane;
 
@@ -205,7 +229,7 @@ class Invader {
 
         this.width = this.width * scale;
         this.height = this.height * scale;
-
+     
         this.counter++;
         if (this.counter == 20 && this.currentImgIsLeft) {
             this.counter = 0;
