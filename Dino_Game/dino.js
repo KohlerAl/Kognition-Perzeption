@@ -9,6 +9,10 @@ let lives = 3;
 let elapsedTime = 0;
 let isGameOver = false;
 
+
+let leftSound = new Audio(); 
+let rightSound = new Audio(); 
+
 let rail1 = new Image();
 let rail2 = new Image();
 let rail3 = new Image();
@@ -20,7 +24,7 @@ let tree3 = new Image();
 
 let startScreenTextDiv;
 
-isTimeout = false; 
+isTimeout = false;
 
 // Lanes
 const LANE = {
@@ -40,10 +44,15 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
-    cacheImages(["IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png"]);
+    cacheImages(["IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Ground.png", "IMG/Rail1.png", "IMG/Rail2.png", "IMG/Rail3.png", "IMG/Sun.png", "IMG/Tree1.png"]);
+
+    leftSound.src = "./SOUND/Left.mp3"; 
+    rightSound.src = "./SOUND/Right.mp3"; 
+
     let btn = document.querySelector("button");
-    btn.addEventListener("pointerdown", startGame); 
-    /* startScreenDiv = document.getElementById("start");
+    btn.addEventListener("pointerdown", startGame);
+    startScreenDiv = document.getElementById("start");
+    /* 
     startScreenTextDiv = startScreenDiv.querySelector("p");
 
 
@@ -76,14 +85,17 @@ function startGame() {
     clouds.push(new Cloud(canvas.width / 3, 100, 1));
     clouds.push(new Cloud(canvas.width / 2, 200, 2));
 
-    /* rail1.src = './IMG/Rail1.png'; 
-    rail2.src = './IMG/Rail2.png'; 
-    rail3.src = './IMG/Rail3.png'; 
-    sun.src = './IMG/Sonne_1.png';  */
-    /* ground.src = './IMG/Ground.png'; */
-    /* tree1.src = './IMG/Tree1.png'; 
-    tree2.src = './IMG/Tree2.png'; 
-    tree3.src = './IMG/Tree3.png';  */
+    //REMOVE
+    startScreenDiv.style.display = "none";
+
+    rail1.src = './IMG/Rail1.png';
+    rail2.src = './IMG/Rail2.png';
+    rail3.src = './IMG/Rail3.png';
+    sun.src = './IMG/Sun.png';
+    ground.src = './IMG/Ground.png';
+    tree1.src = './IMG/Tree1.png';
+    tree2.src = './IMG/Tree2.png';
+    tree3.src = './IMG/Tree3.png';
 
     /* imagestoDraw = [rail1, rail2, rail3, sun, ground, tree1, tree2, tree3]; 
     console.log(ground) */
@@ -126,30 +138,30 @@ class Player {
 }
 
 class Invader {
-      //declare variables
-      velocity;
+    //declare variables
+    velocity;
 
-      //Get Images for left and right step
-      image;
-  
-      imageLeft;
-      imageRight;
-      currentImgIsLeft = true;
-      counter = 0;
-  
-      width;
-      height;
-      position;
-      sound;
-      volume;
-      audioContext;
-      source;
-      distortion;
-      currentDist = 800;
-      filter;
-      filterVal = 3000;
-      // Add a lane property to the Invader class
-      lane;
+    //Get Images for left and right step
+    image;
+
+    imageLeft;
+    imageRight;
+    currentImgIsLeft = true;
+    counter = 0;
+
+    width;
+    height;
+    position;
+    sound;
+    volume;
+    audioContext;
+    source;
+    distortion;
+    currentDist = 800;
+    filter;
+    filterVal = 3000;
+    // Add a lane property to the Invader class
+    lane;
     constructor(initialLane) {
         this.lane = initialLane;
 
@@ -163,8 +175,8 @@ class Invader {
 
         this.imageLeft = document.querySelector("#left");
         this.imageRight = document.querySelector("#right");
-       /*  this.imageLeft.src = './IMG/Dino_Walk1.png';
-        this.imageRight.src = './IMG/Dino_Walk2.png'; */
+        /*  this.imageLeft.src = './IMG/Dino_Walk1.png';
+         this.imageRight.src = './IMG/Dino_Walk2.png'; */
 
         const scale = 0.05;
         this.width = this.image.width * scale;
@@ -172,7 +184,7 @@ class Invader {
 
         this.position = {
             x: canvas.width / 2 - this.width / 2,
-            y: canvas.height / 5
+            y: canvas.height / 3
         };
 
         this.sound = new Audio();
@@ -200,7 +212,7 @@ class Invader {
         this.filter.type = "lowpass";
         this.filterVal = 0;
         this.filter.frequency.setTargetAtTime(parseFloat(this.filterVal), parseFloat(this.audioContext.currentTime), parseFloat(0));
-        console.log(this.sound, this.audioContext, this.source, this.volume); 
+        console.log(this.sound, this.audioContext, this.source, this.volume);
     }
 
     draw() {
@@ -230,7 +242,7 @@ class Invader {
 
         this.width = this.width * scale;
         this.height = this.height * scale;
-     
+
         this.counter++;
         if (this.counter == 20 && this.currentImgIsLeft) {
             this.counter = 0;
@@ -307,9 +319,9 @@ class Cloud {
 function createInvaders() {
     if (invaders.length === 0) {
         const invader = new Invader(currentLane);
-        invader.image.onload = function() {
-            invaders.push(invader); 
-            console.log("hello dino") 
+        invader.image.onload = function () {
+            invaders.push(invader);
+            console.log("hello dino")
         }
     }
 }
@@ -327,6 +339,9 @@ function animate() {
     if (currentLane == LANE.MIDDLE) {
         c.fillStyle = '#BCE5E7';
         c.fillRect(0, 0, canvas.width, canvas.height);
+        c.drawImage(ground, 0, canvas.height / 2, canvas.width, canvas.height);
+        c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2, 250, canvas.height/ 2); 
+        c.drawImage(sun, 100, 100, 100, 100)
     }
     else if (currentLane == LANE.LEFT) {
         c.fillStyle = 'red';
@@ -435,17 +450,17 @@ const audioContext = new AudioContext();
 
 function requestWebAudio() {
     return new Promise((resolve, reject) => {
-      if (AudioContext) {
-        audioContext.resume()
-          .then(() => resolve())
-          .catch(() => reject());
-      }
-      else {
-        reject("web audio not available");
-      }
+        if (AudioContext) {
+            audioContext.resume()
+                .then(() => resolve())
+                .catch(() => reject());
+        }
+        else {
+            reject("web audio not available");
+        }
     });
-  }
-  
+}
+
 
 const defaultThreshold = 2;
 let filterCoeff = null;
@@ -459,8 +474,8 @@ function onDeviceMotion(e) {
         dataStreamResolve();
         clearTimeout(dataStreamTimeout);
     }
-    if(isTimeout)
-        return; 
+    if (isTimeout)
+        return;
 
 
     const acc = scaleAcc * e.acceleration.x;
@@ -485,10 +500,10 @@ function onDeviceMotion(e) {
         const threshold = Math.min(-defaultThreshold, -0.666 * rightPeak);
         if (currentFilteredAcc < threshold) {
             switchLanes("d");
-            isTimeout = true; 
+            isTimeout = true;
 
-            window.setTimeout(function() {
-                isTimeout = false; 
+            window.setTimeout(function () {
+                isTimeout = false;
             }, 500)
         }
     } else if (currentFilteredAcc >= defaultThreshold && lastDiffAcc >= 0 && currentDiffAcc < 0) {
@@ -498,11 +513,11 @@ function onDeviceMotion(e) {
         // trigger on right kick but not on left stop
         const threshold = Math.max(defaultThreshold, -0.666 * leftPeak);
         if (currentFilteredAcc >= threshold) {
-            switchLanes("a"); 
-            isTimeout = true; 
+            switchLanes("a");
+            isTimeout = true;
 
-            window.setTimeout(function() {
-                isTimeout = false; 
+            window.setTimeout(function () {
+                isTimeout = false;
             }, 500)
         }
     }
@@ -557,8 +572,7 @@ function resetGame() {
     randomInterval();
 }
 
-function cacheImages(array)
-{
+function cacheImages(array) {
     if (!cacheImages.list) {
         cacheImages.list = [];
     }
@@ -566,7 +580,7 @@ function cacheImages(array)
     console.log(list)
     for (var i = 0; i < array.length; i++) {
         var img = new Image();
-        img.onload = function() {
+        img.onload = function () {
             var index = list.indexOf(this);
             if (index !== -1) {
                 // remove image from the array once it's loaded
