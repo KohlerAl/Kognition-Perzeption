@@ -387,6 +387,7 @@ function switchLanes(dir) {
                     currentLane = LANE.MIDDLE;
                 }
             }
+            leftSound.play(); 
             break;
         case 'd':
             if (currentLane == LANE.MIDDLE || currentLane == LANE.LEFT) {
@@ -397,6 +398,7 @@ function switchLanes(dir) {
                     currentLane = LANE.MIDDLE;
                 }
             }
+            rightSound.play(); 
             break;
     }
 }
