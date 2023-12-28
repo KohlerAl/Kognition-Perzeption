@@ -73,25 +73,29 @@ function handleLoad() {
             .catch((error) => setOverlayError(error)); // display error
     }); */
 
-     // Create Visual and Audio buttons
-     let visualButton = document.createElement("button");
-     visualButton.textContent = "Visual";
-     visualButton.id = "visualButton";
-     visualButton.addEventListener("click", () => {
-         isAudioMode = false;
-         switchToMode();
-     });
-     startScreenDiv.appendChild(visualButton);
- 
-     let audioButton = document.createElement("button");
-     audioButton.textContent = "Audio";
-     audioButton.id = "audioButton";
-     audioButton.addEventListener("click", () => {
-         isAudioMode = true;
-         switchToMode();
-     });
-     startScreenDiv.appendChild(audioButton);
- 
+     // Only create buttons if they haven't been created before
+    if (!buttonsCreated) {
+        // Create Visual and Audio buttons
+        let visualButton = document.createElement("button");
+        visualButton.textContent = "Visual";
+        visualButton.id = "visualButton";
+        visualButton.addEventListener("click", () => {
+            isAudioMode = false;
+            switchToMode();
+        });
+        startScreenDiv.appendChild(visualButton);
+
+        let audioButton = document.createElement("button");
+        audioButton.textContent = "Audio";
+        audioButton.id = "audioButton";
+        audioButton.addEventListener("click", () => {
+            isAudioMode = true;
+            switchToMode();
+        });
+        startScreenDiv.appendChild(audioButton);
+
+        buttonsCreated = true; // Set the flag to true
+    }
 }
 
 function startGame() {
