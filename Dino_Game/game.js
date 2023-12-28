@@ -57,6 +57,14 @@ function startGame() {
     c = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+
+    // Load and draw the background image
+    let backgroundImage = new Image();
+    backgroundImage.src = './IMG/Background.png'; // replace with your image path
+    backgroundImage.onload = function() {
+       c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    }
+
     //show canvas and hide button
     canvas.style.display = "block";
     let btn = document.querySelector("button");
