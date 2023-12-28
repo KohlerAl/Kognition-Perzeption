@@ -122,13 +122,14 @@ function startGame(mode) {
     let btn = document.querySelector("button");
     btn.style.display = "none";
 
+    // Always show the timer and hearts
+    document.getElementById("timer").style.display = "block";
+    document.getElementById("lives").style.display = "block";
+
      // Mode-specific setup
      if (mode === "Audio") {
         // Set the background to black, show the timer and hearts
         canvas.style.background = "black";
-        // Assuming you have elements with IDs "timer" and "hearts"
-        document.getElementById("timer").style.display = "block";
-        document.getElementById("hearts").style.display = "block";
     } else if (mode === "Visual") {
         // Set the background image
         backgroundImage = new Image();
