@@ -48,7 +48,7 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
-    cacheImages(["IMG/Background_2.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Ground.png", "IMG/Rail1.png", "IMG/Rail2.png", "IMG/Rail3.png", "IMG/Sun.png", "IMG/Tree1.png"]);
+    cacheImages(["IMG/Background_2.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Rail2.png", "IMG/Tree1.png"]);
 
     leftSound.src = "./SOUND/Left.mp3"; 
     rightSound.src = "./SOUND/Right.mp3"; 
@@ -72,6 +72,26 @@ function handleLoad() {
             .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
     }); */
+
+     // Create Visual and Audio buttons
+     let visualButton = document.createElement("button");
+     visualButton.textContent = "Visual";
+     visualButton.id = "visualButton";
+     visualButton.addEventListener("click", () => {
+         isAudioMode = false;
+         switchToMode();
+     });
+     startScreenDiv.appendChild(visualButton);
+ 
+     let audioButton = document.createElement("button");
+     audioButton.textContent = "Audio";
+     audioButton.id = "audioButton";
+     audioButton.addEventListener("click", () => {
+         isAudioMode = true;
+         switchToMode();
+     });
+     startScreenDiv.appendChild(audioButton);
+ 
 }
 
 function startGame() {
