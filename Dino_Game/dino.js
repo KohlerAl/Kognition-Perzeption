@@ -53,9 +53,38 @@ function handleLoad() {
     leftSound.src = "./SOUND/Left.mp3"; 
     rightSound.src = "./SOUND/Right.mp3"; 
 
-    let btn = document.querySelector("button");
-    btn.addEventListener("pointerdown", startGame);
+    let gameMode;
+
+    // Get the buttons from the HTML document
+    let audioButton = document.getElementById("audioButton");
+    let visualButton = document.getElementById("visualButton");
+    let letsGoButton = document.getElementById("letsGoButton");
+
+    // Add event listeners to the buttons
+    audioButton.addEventListener("click", function() {
+        gameMode = "Audio";
+        letsGoButton.style.display = "block"; // Show the "Let's go" button
+    });
+
+    visualButton.addEventListener("click", function() {
+        gameMode = "Visual";
+        letsGoButton.style.display = "block"; // Show the "Let's go" button
+    });
+
+    letsGoButton.addEventListener("click", function() {
+        if (gameMode === "Audio") {
+            // Start the game in Audio mode
+            // Set the background to black, show the timer and hearts
+        } else if (gameMode === "Visual") {
+            // Start the game in Visual mode
+        }
+    });
+
     startScreenDiv = document.getElementById("start");
+
+    /* let btn = document.querySelector("button");
+    btn.addEventListener("pointerdown", startGame);
+    startScreenDiv = document.getElementById("start"); */
     /* 
     startScreenTextDiv = startScreenDiv.querySelector("p");
 
