@@ -346,29 +346,34 @@ function animate() {
     // Clear the canvas
     c.clearRect(0, 0, canvas.width, canvas.height);
 
+    // Draw preloaded background image 
+    c.fillStyle = '#BCE5E7';
+    c.fillRect(0, 0, canvas.width, canvas.height);
+    c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    
+
     if (currentLane == LANE.MIDDLE) {
-        c.fillStyle = '#BCE5E7';
-        c.fillRect(0, 0, canvas.width, canvas.height);
+        /* c.fillStyle = '#BCE5E7';
+        c.fillRect(0, 0, canvas.width, canvas.height); */
        /*  c.drawImage(ground, 0, canvas.height / 2, canvas.width, canvas.height);
         c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2, 250, canvas.height/ 2); 
         c.drawImage(sun, 100, 100, 100, 100) */
     }
     else if (currentLane == LANE.LEFT) {
-        c.fillStyle = 'red';
-        c.fillRect(0, 0, canvas.width, canvas.height);
+       /*  c.fillStyle = 'red';
+        c.fillRect(0, 0, canvas.width, canvas.height); */
     }
     else if (currentLane == LANE.RIGHT) {
-        c.fillStyle = 'blue';
-        c.fillRect(0, 0, canvas.width, canvas.height);
+        /* c.fillStyle = 'blue';
+        c.fillRect(0, 0, canvas.width, canvas.height); */
     }
 
     /* clouds.forEach(cloud => cloud.draw());
  */
 
-    // Draw preloaded background image last
-    c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-
     
+
+
     invaders.forEach((invader) => {
         invader.draw();
     });
