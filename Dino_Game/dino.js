@@ -45,7 +45,7 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
-    cacheImages(["IMG/Background.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Ground.png", "IMG/Rail1.png", "IMG/Rail2.png", "IMG/Rail3.png", "IMG/Sun.png", "IMG/Tree1.png"]);
+    cacheImages(["IMG/Background_1.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Ground.png", "IMG/Rail1.png", "IMG/Rail2.png", "IMG/Rail3.png", "IMG/Sun.png", "IMG/Tree1.png"]);
 
     leftSound.src = "./SOUND/Left.mp3"; 
     rightSound.src = "./SOUND/Right.mp3"; 
@@ -91,7 +91,7 @@ function startGame() {
 
          // Load the background image once
      backgroundImage = new Image();
-     backgroundImage.src = './IMG/Background.png';
+     backgroundImage.src = './IMG/Background_1.png';
 
      c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
@@ -358,6 +358,9 @@ function animate() {
         const sourceY = 0;
         const sourceWidth = laneWidth;
         const sourceHeight = backgroundImage.height;
+
+        // Desired height for the background image
+        const desiredHeight = 1000;
 
         // Draw the background for the current lane
         c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
