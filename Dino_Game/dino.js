@@ -63,20 +63,27 @@ function handleLoad() {
     // Add event listeners to the buttons
     audioButton.addEventListener("click", function() {
         gameMode = "Audio";
+        audioButton.style.display = "none"; // Hide the Audio button
+        visualButton.style.display = "none"; // Hide the Visual button
         letsGoButton.style.display = "block"; // Show the "Let's go" button
     });
 
     visualButton.addEventListener("click", function() {
         gameMode = "Visual";
+        audioButton.style.display = "none"; // Hide the Audio button
+        visualButton.style.display = "none"; // Hide the Visual button
         letsGoButton.style.display = "block"; // Show the "Let's go" button
     });
 
     letsGoButton.addEventListener("click", function() {
+        letsGoButton.style.display = "none"; // Hide the "Let's go" button
         if (gameMode === "Audio") {
             // Start the game in Audio mode
             // Set the background to black, show the timer and hearts
+            startGame(); // Call the startGame function
         } else if (gameMode === "Visual") {
             // Start the game in Visual mode
+            startGame(); // Call the startGame function
         }
     });
 
