@@ -349,6 +349,14 @@ function animate() {
     // Draw preloaded background image 
     c.fillStyle = '#BCE5E7';
     c.fillRect(0, 0, canvas.width, canvas.height);
+
+     // Calculate source rectangle based on the current lane
+     const laneWidth = backgroundImage.width / 3;
+     const sourceX = laneWidth * currentLane;
+     const sourceY = 0;
+     const sourceWidth = laneWidth;
+     const sourceHeight = backgroundImage.height;
+     
     c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
     
 
