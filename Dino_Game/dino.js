@@ -80,10 +80,10 @@ function handleLoad() {
         if (gameMode === "Audio") {
             // Start the game in Audio mode
             // Set the background to black, show the timer and hearts
-            startGame(); // Call the startGame function
+            startGame("Audio"); // Call the startGame function with "Audio" as argument
         } else if (gameMode === "Visual") {
             // Start the game in Visual mode
-            startGame(); // Call the startGame function
+            startGame("Visual"); // Call the startGame function with "Visual" as argument
         }
     });
 
@@ -110,7 +110,7 @@ function handleLoad() {
     }); */
 }
 
-function startGame() {
+function startGame(mode) {
     window.addEventListener("devicemotion", onDeviceMotion);
     canvas = document.querySelector('canvas');
     c = canvas.getContext('2d');
@@ -121,6 +121,21 @@ function startGame() {
     canvas.style.display = "block";
     let btn = document.querySelector("button");
     btn.style.display = "none";
+
+     // Mode-specific setup
+     if (mode === "Audio") {
+        // Set the background to black, show the timer and hearts
+        canvas.style.background = "black";
+        // Assuming you have elements with IDs "timer" and "hearts"
+        document.getElementById("timer").style.display = "block";
+        document.getElementById("hearts").style.display = "block";
+    } else if (mode === "Visual") {
+        // Set the background image
+        backgroundImage = new Image();
+        backgroundImage.src = './IMG/Background_2.png';
+        c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    }
+
 
    /*  clouds.push(new Cloud(canvas.width / 3, 100, 1));
     clouds.push(new Cloud(canvas.width / 2, 200, 2)); */
