@@ -13,7 +13,7 @@ let isGameOver = false;
 let leftSound = new Audio(); 
 let rightSound = new Audio(); 
 
-let background = new Image();
+let backgroundImage;
 let rail1 = new Image();
 let rail2 = new Image();
 let rail3 = new Image();
@@ -89,7 +89,11 @@ function startGame() {
     //REMOVE
     startScreenDiv.style.display = "none";
 
-    background.src = './IMG/Background.png'
+         // Load the background image once
+     backgroundImage = new Image();
+     backgroundImage.src = './IMG/Background.png';
+
+     c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
    /*  rail1.src = './IMG/Rail1.png';
     rail2.src = './IMG/Rail2.png';
@@ -339,10 +343,8 @@ function randomInterval() {
 }
 
 function animate() {
-    // Draw background image
-    const backgroundImage = new Image();
-    backgroundImage.src = './IMG/Background.png';
-    c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    // Draw preloaded background image
+        c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
     if (currentLane == LANE.MIDDLE) {
         c.fillStyle = '#BCE5E7';
