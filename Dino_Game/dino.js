@@ -343,8 +343,8 @@ function randomInterval() {
 }
 
 function animate() {
-    // Draw preloaded background image
-        c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    // Clear the canvas
+    c.clearRect(0, 0, canvas.width, canvas.height);
 
     if (currentLane == LANE.MIDDLE) {
         c.fillStyle = '#BCE5E7';
@@ -362,8 +362,13 @@ function animate() {
         c.fillRect(0, 0, canvas.width, canvas.height);
     }
 
-    clouds.forEach(cloud => cloud.draw());
+    /* clouds.forEach(cloud => cloud.draw());
+ */
 
+    // Draw preloaded background image last
+    c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+    
     invaders.forEach((invader) => {
         invader.draw();
     });
@@ -373,6 +378,8 @@ function animate() {
     c.fillStyle = "white";
     c.fillText("Time: " + Math.floor(elapsedTime) + "s", 10, 60);
     drawLives();
+
+    
 }
 
 addEventListener('keydown', ({ key }) => {
