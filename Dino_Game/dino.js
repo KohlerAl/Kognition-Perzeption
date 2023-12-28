@@ -9,6 +9,10 @@ let lives = 3;
 let elapsedTime = 0;
 let isGameOver = false;
 
+let gameScreenDiv;
+let isAudioMode;
+let buttonsCreated = false;
+
 
 let leftSound = new Audio(); 
 let rightSound = new Audio(); 
@@ -53,9 +57,9 @@ function handleLoad() {
     leftSound.src = "./SOUND/Left.mp3"; 
     rightSound.src = "./SOUND/Right.mp3"; 
 
-    let btn = document.querySelector("button");
+    /* let btn = document.querySelector("button");
     btn.addEventListener("pointerdown", startGame);
-    startScreenDiv = document.getElementById("start");
+    startScreenDiv = document.getElementById("start"); */
     /* 
     startScreenTextDiv = startScreenDiv.querySelector("p");
 
@@ -73,30 +77,32 @@ function handleLoad() {
             .catch((error) => setOverlayError(error)); // display error
     }); */
 
-     // Only create buttons if they haven't been created before
-    if (!buttonsCreated) {
-        // Create Visual and Audio buttons
-        let visualButton = document.createElement("button");
-        visualButton.textContent = "Visual";
-        visualButton.id = "visualButton";
-        visualButton.addEventListener("click", () => {
-            isAudioMode = false;
-            switchToMode();
-        });
-        startScreenDiv.appendChild(visualButton);
+    let visualButton = document.getElementById("visualButton");
+    let audioButton = document.getElementById("audioButton");
+    let letsGoButton = document.getElementById("letsGoButton");
 
-        let audioButton = document.createElement("button");
-        audioButton.textContent = "Audio";
-        audioButton.id = "audioButton";
-        audioButton.addEventListener("click", () => {
-            isAudioMode = true;
-            switchToMode();
-        });
-        startScreenDiv.appendChild(audioButton);
+    visualButton.addEventListener("click", () => {
+        isAudioMode = false;
+        switchToMode();
+    });
 
-        buttonsCreated = true; // Set the flag to true
-    }
+    audioButton.addEventListener("click", () => {
+        isAudioMode = true;
+        switchToMode();
+    });
+
+    letsGoButton.addEventListener("click", () => {
+        document.getElementById("modeButtons").style.display = "none";
+        document.getElementById("gameScreen").style.display = "block";
+        startGame();
+    });
 }
+
+function switchToMode() {
+    document.getElementById("modeButtons").style.display = "none";
+    document.getElementById("letsGoButton").style.display = "block";
+}
+
 
 function startGame() {
     window.addEventListener("devicemotion", onDeviceMotion);
@@ -120,7 +126,17 @@ function startGame() {
      backgroundImage = new Image();
      backgroundImage.src = './IMG/Background_2.png';
 
-     c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    // Show appropriate elements based on the mode
+    if (isAudioMode) {
+        // Example: Show only necessary elements for the audio mode
+        c.fillStyle = 'black';
+        c.fillRect(0, 0, canvas.width, canvas.height);
+        
+    } else {
+        // Example: Show elements for the visual mode
+        // (e.g., your game canvas)
+        c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    }
 
      rail2.src = './IMG/Rail2.png';
 
