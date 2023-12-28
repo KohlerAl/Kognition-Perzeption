@@ -413,23 +413,25 @@ function animate() {
         // Draw preloaded background image for the Visual mode
         c.fillStyle = '#BCE5E7';
         c.fillRect(0, 0, canvas.width, canvas.height);
-    }
+    
 
-    // Check if the background image is loaded
-    if (backgroundImage.complete) {
-        // Calculate source rectangle based on the current lane
-        const laneWidth = backgroundImage.width / 3;
-        const sourceX = laneWidth * currentLane;
-        const sourceY = 0;
-        const sourceWidth = laneWidth;
-        const sourceHeight = backgroundImage.height;
+        // Check if the background image is loaded
+        if (backgroundImage.complete) {
+             // Calculate source rectangle based on the current lane
+            const laneWidth = backgroundImage.width / 3;
+            const sourceX = laneWidth * currentLane;
+            const sourceY = 0;
+            const sourceWidth = laneWidth;
+            const sourceHeight = backgroundImage.height;
 
         /* // Desired height for the background image
         const desiredHeight = 1000; */
 
         // Draw the background for the current lane
-        c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
-    }
+            c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+        }
+
+
     
 
     if (currentLane == LANE.MIDDLE) {
@@ -450,6 +452,8 @@ function animate() {
         /* c.fillStyle = 'blue';
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
+
+}
 
     /* clouds.forEach(cloud => cloud.draw());
  */
