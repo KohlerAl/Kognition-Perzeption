@@ -13,6 +13,7 @@ let isGameOver = false;
 let leftSound = new Audio(); 
 let rightSound = new Audio(); 
 
+let background = new Image();
 let rail1 = new Image();
 let rail2 = new Image();
 let rail3 = new Image();
@@ -44,7 +45,7 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
-    cacheImages(["IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Ground.png", "IMG/Rail1.png", "IMG/Rail2.png", "IMG/Rail3.png", "IMG/Sun.png", "IMG/Tree1.png"]);
+    cacheImages(["IMG/Background.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Ground.png", "IMG/Rail1.png", "IMG/Rail2.png", "IMG/Rail3.png", "IMG/Sun.png", "IMG/Tree1.png"]);
 
     leftSound.src = "./SOUND/Left.mp3"; 
     rightSound.src = "./SOUND/Right.mp3"; 
@@ -82,20 +83,22 @@ function startGame() {
     let btn = document.querySelector("button");
     btn.style.display = "none";
 
-    clouds.push(new Cloud(canvas.width / 3, 100, 1));
-    clouds.push(new Cloud(canvas.width / 2, 200, 2));
+   /*  clouds.push(new Cloud(canvas.width / 3, 100, 1));
+    clouds.push(new Cloud(canvas.width / 2, 200, 2)); */
 
     //REMOVE
     startScreenDiv.style.display = "none";
 
-    rail1.src = './IMG/Rail1.png';
+    background.src = './IMG/Background.png'
+
+   /*  rail1.src = './IMG/Rail1.png';
     rail2.src = './IMG/Rail2.png';
     rail3.src = './IMG/Rail3.png';
     sun.src = './IMG/Sun.png';
     ground.src = './IMG/Ground.png';
     tree1.src = './IMG/Tree1.png';
     tree2.src = './IMG/Tree2.png';
-    tree3.src = './IMG/Tree3.png';
+    tree3.src = './IMG/Tree3.png'; */
 
     /* imagestoDraw = [rail1, rail2, rail3, sun, ground, tree1, tree2, tree3]; 
     console.log(ground) */
@@ -336,12 +339,17 @@ function randomInterval() {
 }
 
 function animate() {
+    // Draw background image
+    const backgroundImage = new Image();
+    backgroundImage.src = './IMG/Background.png';
+    c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
     if (currentLane == LANE.MIDDLE) {
         c.fillStyle = '#BCE5E7';
         c.fillRect(0, 0, canvas.width, canvas.height);
-        c.drawImage(ground, 0, canvas.height / 2, canvas.width, canvas.height);
+       /*  c.drawImage(ground, 0, canvas.height / 2, canvas.width, canvas.height);
         c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2, 250, canvas.height/ 2); 
-        c.drawImage(sun, 100, 100, 100, 100)
+        c.drawImage(sun, 100, 100, 100, 100) */
     }
     else if (currentLane == LANE.LEFT) {
         c.fillStyle = 'red';
