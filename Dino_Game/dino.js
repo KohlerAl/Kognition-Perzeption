@@ -1,5 +1,3 @@
-console.log("Script loaded");
-
 let canvas;
 let c;
 let currentPoints;
@@ -10,10 +8,6 @@ let startScreenDiv;
 let lives = 3;
 let elapsedTime = 0;
 let isGameOver = false;
-
-let gameScreenDiv;
-let isAudioMode;
-let buttonsCreated = false;
 
 
 let leftSound = new Audio(); 
@@ -42,9 +36,6 @@ const LANE = {
 
 let clouds = [];
 
-let heartImage = new Image();
-heartImage.src = './IMG/Heart.png';
-
 let currentLane = LANE.MIDDLE;
 
 let player;
@@ -54,14 +45,14 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
-    cacheImages(["IMG/Background_2.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Rail2.png", "IMG/Tree1.png"]);
+    cacheImages(["IMG/Background_2.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Ground.png", "IMG/Rail1.png", "IMG/Rail2.png", "IMG/Rail3.png", "IMG/Sun.png", "IMG/Tree1.png"]);
 
     leftSound.src = "./SOUND/Left.mp3"; 
     rightSound.src = "./SOUND/Right.mp3"; 
 
-    /* let btn = document.querySelector("button");
+    let btn = document.querySelector("button");
     btn.addEventListener("pointerdown", startGame);
-    startScreenDiv = document.getElementById("start"); */
+    startScreenDiv = document.getElementById("start");
     /* 
     startScreenTextDiv = startScreenDiv.querySelector("p");
 
@@ -78,33 +69,7 @@ function handleLoad() {
             .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
     }); */
-
-    let visualButton = document.getElementById("visualButton");
-    let audioButton = document.getElementById("audioButton");
-    let letsGoButton = document.getElementById("letsGoButton");
-
-    visualButton.addEventListener("click", () => {
-        isAudioMode = false;
-        switchToMode();
-    });
-
-    audioButton.addEventListener("click", () => {
-        isAudioMode = true;
-        switchToMode();
-    });
-
-    letsGoButton.addEventListener("click", () => {
-        document.getElementById("modeButtons").style.display = "none";
-        document.getElementById("gameScreen").style.display = "block";
-        startGame();
-    });
 }
-
-function switchToMode() {
-    document.getElementById("modeButtons").style.display = "none";
-    document.getElementById("letsGoButton").style.display = "block";
-}
-
 
 function startGame() {
     window.addEventListener("devicemotion", onDeviceMotion);
@@ -128,17 +93,7 @@ function startGame() {
      backgroundImage = new Image();
      backgroundImage.src = './IMG/Background_2.png';
 
-    // Show appropriate elements based on the mode
-    if (isAudioMode) {
-        // Example: Show only necessary elements for the audio mode
-        c.fillStyle = 'black';
-        c.fillRect(0, 0, canvas.width, canvas.height);
-
-    } else {
-        // Example: Show elements for the visual mode
-        // (e.g., your game canvas)
-        c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-    }
+     c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
      rail2.src = './IMG/Rail2.png';
 
@@ -643,7 +598,7 @@ function drawLives() {
 } */
     for (let i = 0; i < player.lives; i++) {
         c.drawImage(heartImage, 10 + i * 30, 30, 20, 20);
-    }
+}
 }
 
 function resetGame() {
