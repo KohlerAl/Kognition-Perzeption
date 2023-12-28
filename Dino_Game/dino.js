@@ -1,3 +1,5 @@
+console.log("Script loaded");
+
 let canvas;
 let c;
 let currentPoints;
@@ -131,7 +133,7 @@ function startGame() {
         // Example: Show only necessary elements for the audio mode
         c.fillStyle = 'black';
         c.fillRect(0, 0, canvas.width, canvas.height);
-        
+
     } else {
         // Example: Show elements for the visual mode
         // (e.g., your game canvas)
