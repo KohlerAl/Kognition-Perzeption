@@ -36,6 +36,9 @@ const LANE = {
 
 let clouds = [];
 
+let heartImage = new Image();
+heartImage.src = './IMG/Heart.png';
+
 let currentLane = LANE.MIDDLE;
 
 let player;
@@ -592,9 +595,13 @@ function gameOver() {
 
 function drawLives() {
     // Display the number of lives in the UI
-    c.font = "20px Arial";
+    /* c.font = "20px Arial";
     c.fillStyle = "white";
     c.fillText("Lives: " + player.lives, 10, 30);
+} */
+    for (let i = 0; i < player.lives; i++) {
+        c.drawImage(heartImage, 10 + i * 30, 30, 20, 20);
+    }
 }
 
 function resetGame() {
