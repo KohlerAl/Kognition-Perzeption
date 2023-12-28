@@ -34,6 +34,9 @@ const LANE = {
     RIGHT: 2
 };
 
+let heartImage = new Image();
+heartImage.src = './IMG/Heart.png';
+
 let clouds = [];
 
 let currentLane = LANE.MIDDLE;
