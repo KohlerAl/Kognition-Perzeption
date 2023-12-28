@@ -1,6 +1,7 @@
 let canvas;
 let c;
 let currentPoints;
+let gameMode;
 
 let imagestoDraw = [];
 
@@ -111,6 +112,7 @@ function handleLoad() {
 }
 
 function startGame(mode) {
+    gameMode = mode;
     window.addEventListener("devicemotion", onDeviceMotion);
     canvas = document.querySelector('canvas');
     c = canvas.getContext('2d');
@@ -403,9 +405,15 @@ function animate() {
     // Clear the canvas
     c.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw preloaded background image 
-    c.fillStyle = '#BCE5E7';
-    c.fillRect(0, 0, canvas.width, canvas.height);
+    if (gameMode === "Audio") {
+        // Fill the canvas with black for the Audio mode
+        c.fillStyle = "black";
+        c.fillRect(0, 0, canvas.width, canvas.height);
+    } else if (gameMode === "Visual") {
+        // Draw preloaded background image for the Visual mode
+        c.fillStyle = '#BCE5E7';
+        c.fillRect(0, 0, canvas.width, canvas.height);
+    }
 
     // Check if the background image is loaded
     if (backgroundImage.complete) {
@@ -459,7 +467,7 @@ function animate() {
     c.fillText("Time: " + Math.floor(elapsedTime) + "s", 10, 60);
     drawLives();
 
-    
+ 
 }
 
 addEventListener('keydown', ({ key }) => {
