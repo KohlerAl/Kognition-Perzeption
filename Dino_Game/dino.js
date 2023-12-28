@@ -453,7 +453,7 @@ function animate() {
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
 
-}
+
 
     /* clouds.forEach(cloud => cloud.draw());
  */
@@ -464,6 +464,9 @@ function animate() {
     invaders.forEach((invader) => {
         invader.draw();
     });
+}
+
+
 
     elapsedTime += 0.025;
     c.font = "20px Arial";
@@ -472,7 +475,8 @@ function animate() {
     drawLives();
 
  
-}
+    }
+
 
 addEventListener('keydown', ({ key }) => {
     switch (key) {
