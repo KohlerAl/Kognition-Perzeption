@@ -132,11 +132,20 @@ function startGame(mode) {
      if (mode === "Audio") {
         // Set the background to black, show the timer and hearts
         canvas.style.background = "black";
+         // Request user interaction for audio
+         requestWebAudio().then(() => {
+            // Start the game logic for Audio mode
+            startAudioGame();
+        }).catch((error) => {
+            console.error("Web audio not available:", error);
+        });
     } else if (mode === "Visual") {
         // Set the background image
         backgroundImage = new Image();
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+        // Start the game in Visual mode
+        startVisualGame();
     }
 
 
@@ -177,6 +186,98 @@ function startGame(mode) {
     window.setInterval(function () {
         currentPoints += 1;
     }, 1000)
+}
+
+function startAudioGame() {
+    // Add audio-specific game logic here
+    // Start continuous spawning of invaders with audio cues
+    randomIntervalAudio();
+
+    function randomIntervalAudio() {
+        createInvaders();
+        let randomSpawn = 5000 + Math.random() * 10000;
+        setTimeout(randomIntervalAudio, randomSpawn);
+    }
+
+    // Set up event listeners for audio-based controls
+    window.addEventListener("devicemotion", onDeviceMotion);
+
+    // Update the game state continuously
+    window.setInterval(function () {
+        animate();
+    }, 35);
+
+    // Function to handle collisions based on audio cues
+function handleAudioCollision() {
+    // Check if there are invaders in the current lane
+    const invaderInLane = invaders.find(invader => invader.lane === currentLane);
+
+    if (invaderInLane) {
+        // Handle collision with invader based on audio cues
+        player.lives--;
+        invaders.splice(invaders.indexOf(invaderInLane), 1);
+
+        if (player.lives <= 0) {
+            gameOver();
+        }
+        drawLives();
+    }
+}
+
+}
+
+// Event listener for audio-based controls
+function onDeviceMotion(e) {
+    // Add logic for controlling the player based on audio cues
+    // Use e.acceleration.x, e.acceleration.y, or other properties as needed
+}
+
+// Function to handle keydown events for audio-based controls
+function handleAudioKeyDown(event) {
+    switch (event.key) {
+        case "a":
+            // Handle left audio cue or trigger left sound
+            break;
+        case "d":
+            // Handle right audio cue or trigger right sound
+            break;
+    }
+}
+
+function startVisualGame() {
+    // Add visual-specific game logic here
+    // Start continuous spawning of invaders without visual cues
+    randomIntervalVisual();
+
+    function randomIntervalVisual() {
+        createInvaders();
+        let randomSpawn = 5000 + Math.random() * 10000;
+        setTimeout(randomIntervalVisual, randomSpawn);
+    }
+
+    // Update the game state continuously
+    window.setInterval(function () {
+        animate();
+    }, 35);
+
+    // Update the timer
+    window.setInterval(function () {
+        elapsedTime += 1;
+        document.getElementById("timer").innerText = "Time: " + elapsedTime + "s";
+    }, 1000);
+}
+
+// Function to handle keydown events for visual-based controls
+function handleVisualKeyDown(event) {
+    switch (event.key) {
+        case "a":
+            switchLanes("a");
+            break;
+        case "d":
+            switchLanes("d");
+            break;
+    }
+
 }
 
 class Player {
@@ -460,12 +561,31 @@ function animate() {
 
     
 
-
     invaders.forEach((invader) => {
         invader.draw();
     });
 }
 
+function checkCollision(invader) {
+    const playerX = player.position.x;
+    const playerY = player.position.y;
+    const playerWidth = player.width;
+    const playerHeight = player.height;
+
+    const invaderX = invader.position.x;
+    const invaderY = invader.position.y;
+    const invaderWidth = invader.width;
+    const invaderHeight = invader.height;
+
+    if (
+        playerX < invaderX + invaderWidth &&
+        playerX + playerWidth > invaderX &&
+        playerY < invaderY + invaderHeight &&
+        playerY + playerHeight > invaderY
+    ) {
+        handleCollision();
+    }
+}
 
 
     elapsedTime += 0.025;
