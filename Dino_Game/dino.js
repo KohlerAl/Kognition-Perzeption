@@ -281,6 +281,22 @@ class Invader {
         console.log(this.sound, this.audioContext, this.source, this.volume);
     }
 
+    update() {
+        // Move the invader
+        this.y += this.speed;
+
+        // Check for collisions with the player
+        if (this.y > player.y && this.y < player.y + player.height &&
+            this.x > player.x && this.x < player.x + player.width) {
+            // Handle collision
+        }
+
+        // Remove the invader if it's off the screen
+        if (this.y > canvas.height) {
+            // Code to remove this invader
+        }
+    }
+
     draw() {
         if (this.image && this.lane === currentLane) {
             if (this.currentImgIsLeft) {
@@ -353,7 +369,10 @@ class Invader {
         }
         return curve;
     }
+
+    
 }
+
 
 class Cloud {
     constructor(x, y, type) {
@@ -466,6 +485,10 @@ function animate() {
     });
 }
 
+    // Update the game state and check for collisions in both modes
+    invaders.forEach((invader) => {
+        invader.update();
+    });
 
 
     elapsedTime += 0.025;
