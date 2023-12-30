@@ -49,7 +49,7 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
-    cacheImages(["IMG/Background_2.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Ground.png", "IMG/Rail1.png", "IMG/Rail2.png", "IMG/Rail3.png", "IMG/Sun.png", "IMG/Tree1.png"]);
+    cacheImages(["IMG/Background_2.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Rail2.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]);
 
     leftSound.src = "./SOUND/Left.mp3"; 
     rightSound.src = "./SOUND/Right.mp3"; 
@@ -137,6 +137,10 @@ function startGame(mode) {
         backgroundImage = new Image();
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+        c.drawImage(tree1, x1, y1, width1, height1);
+        c.drawImage(tree2, x2, y2, width2, height2);
+        c.drawImage(tree3, x3, y3, width3, height3);
     }
 
 
@@ -366,6 +370,36 @@ class Cloud {
         }
         else if (type == 2) {
             this.image.src = './IMG/Cloud_2.png';
+        }
+
+        this.scale = 0.1;
+    }
+
+    draw() {
+        c.drawImage(
+            this.image,
+            this.x,
+            this.y,
+            this.image.width * this.scale,
+            this.image.height * this.scale
+        );
+    }
+}
+
+class Tree {
+    constructor(x, y, type) {
+        this.x = x;
+        this.y = y;
+        this.image = new Image();
+
+        if (type == 1) {
+            this.image.src = './IMG/Tree1.png';
+        }
+        else if (type == 2) {
+            this.image.src = './IMG/Tree2.png';
+        }
+        else if (type == 3) {
+            this.image.src = './IMG/Tree3.png';
         }
 
         this.scale = 0.1;
