@@ -401,35 +401,44 @@ function randomInterval() {
     func();
 }
 
-function createInvadersAudio() {
-    if (invaders.length === 0) {
-        const invader = new Invader(currentLane);
-        invaders.push(invader);
-        console.log("Invader spawned in Audio Mode");
-    }
-}
-
-function handleInvaderCollisions() {
-    invaders.forEach((invader) => {
-        if (invader.lane === currentLane && invader.position.y >= canvas.height - player.height) {
-            handleCollision(); // Handle collision with the player
-            invaders.splice(0, 1); // Remove the invader after collision
-            console.log("Invader collided in Audio Mode");
-        }
-    });
-}
-
 function animate() {
     // Clear the canvas
     c.clearRect(0, 0, canvas.width, canvas.height);
 
     if (gameMode === "Audio") {
+
+        // Check if the background image is loaded
+        if (backgroundImage.complete) {
+            // Calculate source rectangle based on the current lane
+           const laneWidth = backgroundImage.width / 3;
+           const sourceX = laneWidth * currentLane;
+           const sourceY = 0;
+           const sourceWidth = laneWidth;
+           const sourceHeight = backgroundImage.height;
+
+       // Draw the background for the current lane
+           c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+       }
+
+   if (currentLane == LANE.MIDDLE) {
+       c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+
+   }
+   else if (currentLane == LANE.LEFT) {
+       c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+   
+   }
+   else if (currentLane == LANE.RIGHT) {
+       c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+    
+   }
+
+   invaders.forEach((invader) => {
+       invader.draw();
+   });
         // Fill the canvas with black for the Audio mode
         c.fillStyle = "black";
         c.fillRect(0, 0, canvas.width, canvas.height);
-        // Spawn invaders and handle collisions
-        createInvadersAudio(); // Function to spawn invaders
-        handleInvaderCollisions(); // Function to handle collisions
     } else if (gameMode === "Visual") {
         // Draw preloaded background image for the Visual mode
         c.fillStyle = '#BCE5E7';
@@ -469,7 +478,7 @@ function animate() {
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
     else if (currentLane == LANE.RIGHT) {
-        c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height/ 2);
+        c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
         /* c.fillStyle = 'blue';
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
