@@ -667,9 +667,11 @@ function drawLives() {
     c.fillStyle = "white";
     c.fillText("Lives: " + player.lives, 10, 30);
 } */
+
+    const border = 50; // Adjust this value to change the size of the invisible border
     for (let i = 0; i < player.lives; i++) {
-        c.drawImage(heartImage, 10 + i * 30, 30, 20, 20);
-}
+        c.drawImage(heartImage, 10 + i * 30, 30 + border, 20, 20);
+    }
 }
 
 function resetGame() {
