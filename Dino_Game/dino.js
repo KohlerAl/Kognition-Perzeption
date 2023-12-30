@@ -124,6 +124,10 @@ function startGame(mode) {
     let btn = document.querySelector("button");
     btn.style.display = "none";
 
+     // Request Web Audio API context
+     requestWebAudio()
+     .then(() => {
+
     // Always show the timer and hearts
     document.getElementById("timer").style.display = "block";
     document.getElementById("lives").style.display = "block";
@@ -170,6 +174,11 @@ function startGame(mode) {
 
     randomInterval();
 
+    // Now you can play sounds safely
+    leftSound.play();
+    rightSound.play();
+
+
     window.setInterval(function () {
         animate();
     }, 35)
@@ -177,6 +186,9 @@ function startGame(mode) {
     window.setInterval(function () {
         currentPoints += 1;
     }, 1000)
+
+})
+
 }
 
 class Player {
@@ -483,13 +495,20 @@ function animate() {
     invaders.forEach((invader) => {
         invader.draw();
     });
-}
+
 
     // Update the game state and check for collisions in both modes
     invaders.forEach((invader) => {
         invader.update();
     });
-
+}
+    /* // Draw the invaders only in the Visual mode
+    if (gameMode === "Visual") {
+        invaders.forEach((invader) => {
+            invader.draw();
+        });
+    }
+ */
 
     elapsedTime += 0.025;
     c.font = "20px Arial";
@@ -684,7 +703,7 @@ function gameOver() {
     resetGame(); // Reset the game
 }
 
-function drawLives() {
+animfunction drawLives() {
     // Display the number of lives in the UI
     /* c.font = "20px Arial";
     c.fillStyle = "white";
