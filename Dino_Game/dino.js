@@ -39,6 +39,8 @@ let heartImage = new Image();
 heartImage.src = './IMG/Heart.png';
 
 let clouds = [];
+let tree = [];
+
 
 let currentLane = LANE.MIDDLE;
 
