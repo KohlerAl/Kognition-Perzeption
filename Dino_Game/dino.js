@@ -138,9 +138,8 @@ function startGame(mode) {
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-        c.drawImage(tree1, x1, y1, width1, height1);
-        c.drawImage(tree2, x2, y2, width2, height2);
-        c.drawImage(tree3, x3, y3, width3, height3);
+        tree.push(new Tree(canvas.width / 3, 100, 1));
+        tree.push(new Tree(canvas.width / 2, 200, 2)); 
     }
 
 
