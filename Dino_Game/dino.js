@@ -283,16 +283,16 @@ class Invader {
 
     update() {
         // Move the invader
-        this.y += this.speed;
-
+        this.position.y += this.velocity.y;
+    
         // Check for collisions with the player
-        if (this.y > player.y && this.y < player.y + player.height &&
-            this.x > player.x && this.x < player.x + player.width) {
+        if (this.position.y > player.y && this.position.y < player.y + player.height &&
+            this.position.x > player.x && this.position.x < player.x + player.width) {
             // Handle collision
         }
-
+    
         // Remove the invader if it's off the screen
-        if (this.y > canvas.height) {
+        if (this.position.y > canvas.height) {
             // Code to remove this invader
         }
     }
