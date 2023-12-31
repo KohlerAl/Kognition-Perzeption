@@ -388,6 +388,8 @@ class Cloud {
 }
 
 class Tree {
+
+    
     constructor(x, y, type) {
         this.x = x;
         this.y = y;
@@ -404,6 +406,11 @@ class Tree {
         }
 
         this.scale = 0.1;
+
+        // Create instances of Tree
+        let tree1 = new Tree(100, 200, 1); 
+        let tree2 = new Tree(300, 400, 2); 
+        let tree3 = new Tree(500, 600, 3); 
     }
 
     draw() {
@@ -489,6 +496,16 @@ function animate() {
             const sourceWidth = laneWidth;
             const sourceHeight = backgroundImage.height;
 
+            // Create instances of Tree
+            let tree1 = new Tree(100, 200, 1); 
+            let tree2 = new Tree(300, 400, 2); 
+            let tree3 = new Tree(500, 600, 3); 
+            
+            // Draw the trees
+            tree1.draw();
+            tree2.draw();
+            tree3.draw();
+
         /* // Desired height for the background image
         const desiredHeight = 1000; */
 
@@ -500,7 +517,7 @@ function animate() {
     
 
     if (currentLane == LANE.MIDDLE) {
-        c.drawImage(rail2,tree1,tree2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+        c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
         /* c.fillStyle = '#BCE5E7';
         c.fillRect(0, 0, canvas.width, canvas.height); */
        /*  c.drawImage(ground, 0, canvas.height / 2, canvas.width, canvas.height);
