@@ -407,10 +407,7 @@ class Tree {
 
         this.scale = 0.1;
 
-        // Create instances of Tree
-        let tree1 = new Tree(100, 200, 1); 
-        let tree2 = new Tree(300, 400, 2); 
-        let tree3 = new Tree(500, 600, 3); 
+    
     }
 
     draw() {
@@ -423,6 +420,8 @@ class Tree {
         );
     }
 }
+
+
 
 function createInvaders() {
     if (invaders.length === 0) {
@@ -500,7 +499,7 @@ function animate() {
             let tree1 = new Tree(100, 200, 1); 
             let tree2 = new Tree(300, 400, 2); 
             let tree3 = new Tree(500, 600, 3); 
-            
+
             // Draw the trees
             tree1.draw();
             tree2.draw();
