@@ -495,15 +495,7 @@ function animate() {
             const sourceWidth = laneWidth;
             const sourceHeight = backgroundImage.height;
 
-            // Create instances of Tree
-            let tree1 = new Tree(100, 200, 1); 
-            let tree2 = new Tree(300, 400, 2); 
-            let tree3 = new Tree(500, 600, 3); 
-
-            // Draw the trees
-            tree1.draw();
-            tree2.draw();
-            tree3.draw();
+           
 
         /* // Desired height for the background image
         const desiredHeight = 1000; */
@@ -512,6 +504,15 @@ function animate() {
             c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
         }
 
+        // Create instances of Tree
+            let tree1 = new Tree(100, 200, 1); 
+            let tree2 = new Tree(300, 400, 2); 
+            let tree3 = new Tree(500, 600, 3); 
+
+            // Draw the trees
+            tree1.draw();
+            tree2.draw();
+            tree3.draw();
 
     
 
