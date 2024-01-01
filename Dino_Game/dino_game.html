@@ -19,10 +19,15 @@
     #start {
         display: flex;
         flex-direction: column;
-        justify-content: center;
         align-items: center;
         height: 100vh;
     }
+
+    #settings {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
 
     button {
       border: none;
@@ -45,10 +50,12 @@
 
 <body>
   <div id="start">
-    <button id="audioButton">Audio</button>
-    <button id="visualButton">Visual</button>
-    <button id="letsGoButton" style="display: none;">Let's go</button>
-    <p></p>
+    <div id="settings">
+        <button id="audio">Audio</button>
+        <button id="visual">Visual</button>
+    </div>
+    <button id="start-button">Start</button>
+</div>
   </div>
   <div id="gameInfo">
     <div id="timer"></div>
