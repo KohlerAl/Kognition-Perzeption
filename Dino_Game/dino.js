@@ -405,7 +405,7 @@ class Tree {
             this.image.src = './IMG/Tree3.png';
         }
 
-        this.scale = 0.1;
+        this.scale = 0.5;
 
     
     }
