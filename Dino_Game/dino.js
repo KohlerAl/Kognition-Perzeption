@@ -391,9 +391,16 @@ class Tree {
 
     
     constructor(x, y, type) {
-        this.x = x;
-        this.y = y;
         this.image = new Image();
+        this.scale = 0.1;  // Adjust this value to change the size of the trees
+        this.width = this.image.width * this.scale;
+        this.height = this.image.height * this.scale;
+
+        this.position = {
+            x: x,
+            y: y
+        };
+        
 
         if (type == 1) {
             this.image.src = './IMG/Tree1.png';
@@ -405,7 +412,7 @@ class Tree {
             this.image.src = './IMG/Tree3.png';
         }
 
-        this.scale = 0.5;
+       
 
     
     }
@@ -418,6 +425,10 @@ class Tree {
             this.image.width * this.scale,
             this.image.height * this.scale
         );
+    }
+
+    move() {
+        this.x -= 2;  // Adjust this value to change the speed of the trees
     }
 }
 
