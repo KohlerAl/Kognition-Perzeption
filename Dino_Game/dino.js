@@ -42,6 +42,7 @@ let clouds = [];
 let tree = [];
 
 
+
 let currentLane = LANE.MIDDLE;
 
 let player;
@@ -418,6 +419,8 @@ class Tree {
     }
 
     draw() {
+        this.width = this.image.width * this.scale;
+        this.height = this.image.height * this.scale;
         c.drawImage(
             this.image,
             this.position.x,
