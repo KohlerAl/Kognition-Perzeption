@@ -39,7 +39,7 @@ let heartImage = new Image();
 heartImage.src = './IMG/Heart.png';
 
 let clouds = [];
-let tree = [];
+let trees = [];
 
 
 
@@ -141,8 +141,8 @@ function startGame(mode) {
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-        tree.push(new Tree(canvas.width / 3, 100, 1));
-        tree.push(new Tree(canvas.width / 2, 200, 2)); 
+        trees.push(new Tree(canvas.width / 3, 100, 1));
+        trees.push(new Tree(canvas.width / 2, 200, 2)); 
     }
 
 
@@ -165,9 +165,6 @@ function startGame(mode) {
     rail3.src = './IMG/Rail3.png';
     sun.src = './IMG/Sun.png';
     ground.src = './IMG/Ground.png';*/
-    tree1.src = './IMG/Tree1.png';
-    tree2.src = './IMG/Tree2.png';
-    tree3.src = './IMG/Tree3.png'; 
 
     /* imagestoDraw = [rail1, rail2, rail3, sun, ground, tree1, tree2, tree3]; 
     console.log(ground) */
@@ -518,7 +515,7 @@ function animate() {
             c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
         }
 
-        // Create instances of Tree
+        /* // Create instances of Tree
             let tree1 = new Tree(100, 200, 1); 
             let tree2 = new Tree(300, 400, 2); 
             let tree3 = new Tree(500, 600, 3); 
@@ -526,7 +523,7 @@ function animate() {
             // Draw the trees
             tree1.draw();
             tree2.draw();
-            tree3.draw();
+            tree3.draw(); */
 
     
 
@@ -548,6 +545,10 @@ function animate() {
         /* c.fillStyle = 'blue';
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
+
+    trees.forEach((trees) => {
+        trees.draw();
+    });
 
 
 
