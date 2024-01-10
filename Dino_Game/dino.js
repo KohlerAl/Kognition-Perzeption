@@ -335,12 +335,14 @@ class Invader {
     }
 
     playSound() {
-        this.sound.play();
-        this.volume.gain.value += 0.01;
-        this.currentDist -= 2;
-        this.distortion.curve = this.distortionCurve(this.currentDist);
-        this.filterVal += 150;
-        this.filter.frequency.setTargetAtTime(this.filterVal, this.audioContext.currentTime, 9);
+        if (audioMode) {
+            this.sound.play();
+            this.volume.gain.value += 0.01;
+            this.currentDist -= 2;
+            this.distortion.curve = this.distortionCurve(this.currentDist);
+            this.filterVal += 150;
+            this.filter.frequency.setTargetAtTime(this.filterVal, this.audioContext.currentTime, 9);
+        }
     }
 
     distortionCurve(amount) {
