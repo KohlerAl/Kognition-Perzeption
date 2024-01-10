@@ -540,11 +540,7 @@ function animate() {
 
     if (currentLane == LANE.MIDDLE) {
         c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
-        trees.forEach((tree) => {
-            if (tree.lane == LANE.MIDDLE) {
-                tree.draw();
-            }
-        });
+        
         /* c.fillStyle = '#BCE5E7';
         c.fillRect(0, 0, canvas.width, canvas.height); */
        /*  c.drawImage(ground, 0, canvas.height / 2, canvas.width, canvas.height);
@@ -553,28 +549,20 @@ function animate() {
     }
     else if (currentLane == LANE.LEFT) {
         c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
-        trees.forEach((tree) => {
-            if (tree.lane == LANE.LEFT) {
-                tree.draw();
-            }
-        });
+        
        /*  c.fillStyle = 'red';
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
     else if (currentLane == LANE.RIGHT) {
         c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
-        trees.forEach((tree) => {
-            if (tree.lane == LANE.RIGHT) {
-                tree.draw();
-            }
-        });
+        
         /* c.fillStyle = 'blue';
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
 
-   /*  trees.forEach((trees) => {
+    trees.forEach((trees) => {
         trees.draw();
-    }); */
+    }); 
 
     
 
