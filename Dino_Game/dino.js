@@ -601,7 +601,9 @@ function switchLanes(dir) {
                     currentLane = LANE.MIDDLE;
                 }
             }
-            leftSound.play(); 
+            if (gameMode === 'Audio') {
+                leftSound.play(); 
+            }
             break;
         case 'd':
             if (currentLane == LANE.MIDDLE || currentLane == LANE.LEFT) {
@@ -612,7 +614,9 @@ function switchLanes(dir) {
                     currentLane = LANE.MIDDLE;
                 }
             }
-            rightSound.play(); 
+            if (gameMode === 'Audio') {
+                rightSound.play(); 
+            }
             break;
     }
 }
