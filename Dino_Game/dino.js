@@ -394,7 +394,7 @@ class Cloud {
 class Tree {
 
     
-    constructor(x, y, type) {
+    constructor(lane, x, y, type) {
         this.lane = lane; // Set the lane property
         this.image = new Image();
         this.scale = 0.1;  // Adjust this value to change the size of the trees
@@ -823,6 +823,7 @@ function cacheImages(array) {
     }
     var list = cacheImages.list;
     console.log(list)
+    
     for (var i = 0; i < array.length; i++) {
         var img = new Image();
         img.onload = function () {
