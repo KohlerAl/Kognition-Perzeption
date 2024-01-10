@@ -123,6 +123,12 @@ function startGame(mode) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    // Calculate the x-coordinates for the lanes
+    let laneWidth = canvas.width / 3;
+    let LEFT = laneWidth / 2; // middle of the left lane
+    let MIDDLE = laneWidth + laneWidth / 2; // middle of the middle lane
+    let RIGHT = 2 * laneWidth + laneWidth / 2; // middle of the right lane
+
     canvas.style.display = "block";
     let btn = document.querySelector("button");
     btn.style.display = "none";
@@ -141,8 +147,9 @@ function startGame(mode) {
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-        trees.push(new Tree(canvas.width / 2, 100, 1));
-        trees.push(new Tree(canvas.width / 1.5, 200, 2)); 
+        trees.push(new Tree(LEFT, 100, 1, 50, 100)); // tree in the left lane
+        trees.push(new Tree(MIDDLE, 200, 2, 75, 150)); // tree in the middle lane
+        trees.push(new Tree(RIGHT, 300, 1, 100, 200)); // tree in the right lane
     }
 
 
