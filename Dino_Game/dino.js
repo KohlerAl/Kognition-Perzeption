@@ -217,6 +217,7 @@ class Invader {
     imageRight;
     currentImgIsLeft = true;
     counter = 0;
+    
 
     width;
     height;
@@ -233,6 +234,7 @@ class Invader {
     lane;
     constructor(initialLane) {
         this.lane = initialLane;
+        this.audioMode = true;
 
         this.velocity = {
             x: 0,
@@ -335,7 +337,7 @@ class Invader {
     }
 
     playSound() {
-        if (audioMode) {
+        if (gameMode === 'Audio') {
             this.sound.play();
             this.volume.gain.value += 0.01;
             this.currentDist -= 2;
