@@ -11,23 +11,14 @@ let elapsedTime = 0;
 let isGameOver = false;
 
 
-let leftSound = new Audio(); 
-let rightSound = new Audio(); 
+let leftSound = new Audio();
+let rightSound = new Audio();
 
 let backgroundImage;
-let rail1 = new Image();
-let rail2 = new Image();
-let rail3 = new Image();
-let sun = new Image();
-let ground = new Image();
-let tree1 = new Image();
-let tree2 = new Image();
-let tree3 = new Image();
-
 let startScreenTextDiv;
 
 isTimeout = false;
-
+let rail2 = new Image(); 
 // Lanes
 const LANE = {
     LEFT: 0,
@@ -40,9 +31,6 @@ heartImage.src = './IMG/Heart.png';
 
 let clouds = [];
 let trees = [];
-
-
-
 let currentLane = LANE.MIDDLE;
 
 let player;
@@ -52,10 +40,10 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
-    cacheImages(["IMG/Background_2.png","IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Rail2.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]);
+    cacheImages(["IMG/Background_2.png", "IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]);
 
-    leftSound.src = "./SOUND/Left.mp3"; 
-    rightSound.src = "./SOUND/Right.mp3"; 
+    leftSound.src = "./SOUND/Left.mp3";
+    rightSound.src = "./SOUND/Right.mp3";
 
     let gameMode;
 
@@ -65,21 +53,21 @@ function handleLoad() {
     let letsGoButton = document.getElementById("letsGoButton");
 
     // Add event listeners to the buttons
-    audioButton.addEventListener("click", function() {
+    audioButton.addEventListener("click", function () {
         gameMode = "Audio";
         audioButton.style.display = "none"; // Hide the Audio button
         visualButton.style.display = "none"; // Hide the Visual button
         letsGoButton.style.display = "block"; // Show the "Let's go" button
     });
 
-    visualButton.addEventListener("click", function() {
+    visualButton.addEventListener("click", function () {
         gameMode = "Visual";
         audioButton.style.display = "none"; // Hide the Audio button
         visualButton.style.display = "none"; // Hide the Visual button
         letsGoButton.style.display = "block"; // Show the "Let's go" button
     });
 
-    letsGoButton.addEventListener("click", function() {
+    letsGoButton.addEventListener("click", function () {
         letsGoButton.style.display = "none"; // Hide the "Let's go" button
         if (gameMode === "Audio") {
             // Start the game in Audio mode
@@ -132,8 +120,8 @@ function startGame(mode) {
     document.getElementById("timer").style.display = "block";
     document.getElementById("lives").style.display = "block";
 
-     // Mode-specific setup
-     if (mode === "Audio") {
+    // Mode-specific setup
+    if (mode === "Audio") {
         // Set the background to black, show the timer and hearts
         canvas.style.background = "black";
     } else if (mode === "Visual") {
@@ -142,38 +130,21 @@ function startGame(mode) {
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-         trees.push(new Tree(LANE.LEFT, 300, 4, 50, 100)); // tree in the left lane
-        trees.push(new Tree(LANE.MIDDLE, 200, 2, 75, 150)); // tree in the middle lane
-        trees.push(new Tree(LANE.RIGHT, 300, 1, 100, 200)); // tree in the right lane  
-
-       /*  trees.push(new Tree(100, 200, 1));
-        trees.push(new Tree(300, 400, 2));
-        trees.push(new Tree(500, 600, 3)); */
+        trees.push(new Tree(300, 200, 1)); // tree in the left lane
+        trees.push(new Tree(200, 200, 2)); // tree in the middle lane
+        trees.push(new Tree(200, 100, 3)); // tree in the right lane  
     }
-
-
-   /*  clouds.push(new Cloud(canvas.width / 3, 100, 1));
-    clouds.push(new Cloud(canvas.width / 2, 200, 2)); */
 
     //REMOVE
     startScreenDiv.style.display = "none";
 
-         // Load the background image once
-     backgroundImage = new Image();
-     backgroundImage.src = './IMG/Background_2.png';
+    // Load the background image once
+    backgroundImage = new Image();
+    backgroundImage.src = './IMG/Background_2.png';
 
-     c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+    c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-     rail2.src = './IMG/Rail2.png';
-
-   /*  rail1.src = './IMG/Rail1.png';
     rail2.src = './IMG/Rail2.png';
-    rail3.src = './IMG/Rail3.png';
-    sun.src = './IMG/Sun.png';
-    ground.src = './IMG/Ground.png';*/
-
-    /* imagestoDraw = [rail1, rail2, rail3, sun, ground, tree1, tree2, tree3]; 
-    console.log(ground) */
 
     player = new Player();
 
@@ -223,8 +194,6 @@ class Invader {
     imageRight;
     currentImgIsLeft = true;
     counter = 0;
-    
-
     width;
     height;
     position;
@@ -289,7 +258,6 @@ class Invader {
         this.filter.type = "lowpass";
         this.filterVal = 0;
         this.filter.frequency.setTargetAtTime(parseFloat(this.filterVal), parseFloat(this.audioContext.currentTime), parseFloat(0));
-        console.log(this.sound, this.audioContext, this.source, this.volume);
     }
 
     draw() {
@@ -334,7 +302,6 @@ class Invader {
 
         if (this.position.x < canvas.width / 4 && this.lane === currentLane) {
             handleCollision();
-            console.log("w")
         }
 
         if (this.width >= canvas.width) {
@@ -396,20 +363,19 @@ class Cloud {
 }
 
 class Tree {
+    type = 0;
 
-    
-    constructor(lane, x, y, type) {
-        this.lane = lane; // Set the lane property
+    constructor(x, y, type) {
         this.image = new Image();
         this.scale = 0.1;  // Adjust this value to change the size of the trees
         this.width = this.image.width * this.scale;
         this.height = this.image.height * this.scale;
-
+        this.type = type;
         this.position = {
             x: x,
             y: y
         };
-        
+
 
         if (type == 1) {
             this.image.src = './IMG/Tree1.png';
@@ -419,18 +385,13 @@ class Tree {
         }
         else if (type == 3) {
             this.image.src = './IMG/Tree3.png';
+            this.position.y += 100; 
         }
-
-       
-
-    
     }
 
     draw() {
-        console.log("Drawing tree at", this.position.x, this.position.y);
-
-        this.width = this.image.width * this.scale;
-        this.height = this.image.height * this.scale;
+        this.width = 100;
+        this.height = 200;
         c.drawImage(
             this.image,
             this.position.x,
@@ -439,10 +400,6 @@ class Tree {
             this.height
         );
     }
-
-    /* move() {
-        this.x -= 2;  // Adjust this value to change the speed of the trees
-    } */
 }
 
 
@@ -452,7 +409,6 @@ function createInvaders() {
         const invader = new Invader(currentLane);
         invader.image.onload = function () {
             invaders.push(invader);
-            console.log("hello dino")
         }
     }
 }
@@ -475,32 +431,32 @@ function animate() {
         // Check if the background image is loaded
         if (backgroundImage.complete) {
             // Calculate source rectangle based on the current lane
-           const laneWidth = backgroundImage.width / 3;
-           const sourceX = laneWidth * currentLane;
-           const sourceY = 0;
-           const sourceWidth = laneWidth;
-           const sourceHeight = backgroundImage.height;
+            const laneWidth = backgroundImage.width / 3;
+            const sourceX = laneWidth * currentLane;
+            const sourceY = 0;
+            const sourceWidth = laneWidth;
+            const sourceHeight = backgroundImage.height;
 
-       // Draw the background for the current lane
-           c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
-       }
+            // Draw the background for the current lane
+            c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
+        }
 
-   if (currentLane == LANE.MIDDLE) {
-       c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+        if (currentLane == LANE.MIDDLE) {
+            c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
 
-   }
-   else if (currentLane == LANE.LEFT) {
-       c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
-   
-   }
-   else if (currentLane == LANE.RIGHT) {
-       c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
-    
-   }
+        }
+        else if (currentLane == LANE.LEFT) {
+            c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
 
-   invaders.forEach((invader) => {
-       invader.draw();
-   });
+        }
+        else if (currentLane == LANE.RIGHT) {
+            c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+
+        }
+
+        invaders.forEach((invader) => {
+            invader.draw();
+        });
         // Fill the canvas with black for the Audio mode
         c.fillStyle = "black";
         c.fillRect(0, 0, canvas.width, canvas.height);
@@ -508,88 +464,55 @@ function animate() {
         // Draw preloaded background image for the Visual mode
         c.fillStyle = '#BCE5E7';
         c.fillRect(0, 0, canvas.width, canvas.height);
-    
+
 
         // Check if the background image is loaded
         if (backgroundImage.complete) {
-             // Calculate source rectangle based on the current lane
+            // Calculate source rectangle based on the current lane
             const laneWidth = backgroundImage.width / 3;
             const sourceX = laneWidth * currentLane;
             const sourceY = 0;
             const sourceWidth = laneWidth;
             const sourceHeight = backgroundImage.height;
 
-           
 
-        /* // Desired height for the background image
-        const desiredHeight = 1000; */
 
-        // Draw the background for the current lane
+            /* // Desired height for the background image
+            const desiredHeight = 1000; */
+
+            // Draw the background for the current lane
             c.drawImage(backgroundImage, sourceX, sourceY, sourceWidth, sourceHeight, 0, 0, canvas.width, canvas.height);
         }
 
-        /* // Create instances of Tree
-            let tree1 = new Tree(100, 200, 1); 
-            let tree2 = new Tree(300, 400, 2); 
-            let tree3 = new Tree(500, 600, 3); 
+        if (currentLane == LANE.MIDDLE) {
+            c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+        }
+        else if (currentLane == LANE.LEFT) {
+            c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+        }
+        else if (currentLane == LANE.RIGHT) {
+            c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+        }
 
-            // Draw the trees
-            tree1.draw();
-            tree2.draw();
-            tree3.draw(); */
+        trees.forEach((trees) => {
+            if (trees.type == 1 && currentLane == LANE.MIDDLE)
+                trees.draw();
+            else if (trees.type == 2 && currentLane == LANE.LEFT)
+                trees.draw();
+            else if (trees.type == 3 && currentLane == LANE.RIGHT)
+                trees.draw();
+        });
 
-    
-
-    if (currentLane == LANE.MIDDLE) {
-        c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
-        
-        /* c.fillStyle = '#BCE5E7';
-        c.fillRect(0, 0, canvas.width, canvas.height); */
-       /*  c.drawImage(ground, 0, canvas.height / 2, canvas.width, canvas.height);
-        c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2, 250, canvas.height/ 2); 
-        c.drawImage(sun, 100, 100, 100, 100) */
+        invaders.forEach((invader) => {
+            invader.draw();
+        });
     }
-    else if (currentLane == LANE.LEFT) {
-        c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
-        
-       /*  c.fillStyle = 'red';
-        c.fillRect(0, 0, canvas.width, canvas.height); */
-    }
-    else if (currentLane == LANE.RIGHT) {
-        c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
-        
-        /* c.fillStyle = 'blue';
-        c.fillRect(0, 0, canvas.width, canvas.height); */
-    }
-
-    trees.forEach((trees) => {
-        trees.draw();
-    }); 
-
-    
-
-
-    /* clouds.forEach(cloud => cloud.draw());
- */
-
-    
-
-
-    invaders.forEach((invader) => {
-        invader.draw();
-    });
-}
-
-
-
     elapsedTime += 0.025;
     c.font = "20px Arial";
     c.fillStyle = "white";
     c.fillText("Time: " + Math.floor(elapsedTime) + "s", 10, 60);
     drawLives();
-
- 
-    }
+}
 
 
 addEventListener('keydown', ({ key }) => {
@@ -615,7 +538,7 @@ function switchLanes(dir) {
                 }
             }
             if (gameMode === 'Audio') {
-                leftSound.play(); 
+                leftSound.play();
             }
             break;
         case 'd':
@@ -628,7 +551,7 @@ function switchLanes(dir) {
                 }
             }
             if (gameMode === 'Audio') {
-                rightSound.play(); 
+                rightSound.play();
             }
             break;
     }
@@ -780,11 +703,6 @@ function gameOver() {
 }
 
 function drawLives() {
-    // Display the number of lives in the UI
-    /* c.font = "20px Arial";
-    c.fillStyle = "white";
-    c.fillText("Lives: " + player.lives, 10, 30);
-} */
 
     const border = 50; // Adjust this value to change the size of the invisible border
     for (let i = 0; i < player.lives; i++) {
@@ -829,10 +747,10 @@ function cacheImages(array) {
                 // check if all images are loaded and start the game
                 if (list.length === 0) {
                     startGame(gameMode);
+                }
             }
+            list.push(img);
+            img.src = array[i];
         }
-        list.push(img);
-        img.src = array[i];
     }
-}
 }
