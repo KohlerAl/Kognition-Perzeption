@@ -142,13 +142,13 @@ function startGame(mode) {
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-        /* trees.push(new Tree(LANE.LEFT, 300, 4, 50, 100)); // tree in the left lane
+        trees.push(new Tree(LANE.LEFT, 300, 4, 50, 100)); // tree in the left lane
         trees.push(new Tree(LANE.MIDDLE, 200, 2, 75, 150)); // tree in the middle lane
-        trees.push(new Tree(LANE.RIGHT, 300, 1, 100, 200)); // tree in the right lane */
+        trees.push(new Tree(LANE.RIGHT, 300, 1, 100, 200)); // tree in the right lane 
 
-        trees.push(new Tree(100, 200, 1));
+       /*  trees.push(new Tree(100, 200, 1));
         trees.push(new Tree(300, 400, 2));
-        trees.push(new Tree(500, 600, 3));
+        trees.push(new Tree(500, 600, 3)); */
     }
 
 
