@@ -123,11 +123,6 @@ function startGame(mode) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Calculate the x-coordinates for the lanes
-    let laneWidth = canvas.width / 3;
-    let LEFT = laneWidth / 2; // middle of the left lane
-    let MIDDLE = laneWidth + laneWidth / 2; // middle of the middle lane
-    let RIGHT = 2 * laneWidth + laneWidth / 2; // middle of the right lane
 
     canvas.style.display = "block";
     let btn = document.querySelector("button");
@@ -147,9 +142,9 @@ function startGame(mode) {
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-        trees.push(new Tree(LEFT, 300, 4, 50, 100)); // tree in the left lane
-        trees.push(new Tree(MIDDLE, 200, 2, 75, 150)); // tree in the middle lane
-        trees.push(new Tree(RIGHT, 300, 1, 100, 200)); // tree in the right lane
+        trees.push(new Tree(LANE.LEFT, 300, 4, 50, 100)); // tree in the left lane
+        trees.push(new Tree(LANE.MIDDLE, 200, 2, 75, 150)); // tree in the middle lane
+        trees.push(new Tree(LANE.RIGHT, 300, 1, 100, 200)); // tree in the right lane
     }
 
 
@@ -400,6 +395,7 @@ class Tree {
 
     
     constructor(x, y, type) {
+        this.lane = lane; // Set the lane property
         this.image = new Image();
         this.scale = 0.1;  // Adjust this value to change the size of the trees
         this.width = this.image.width * this.scale;
@@ -438,9 +434,9 @@ class Tree {
         );
     }
 
-    move() {
+    /* move() {
         this.x -= 2;  // Adjust this value to change the speed of the trees
-    }
+    } */
 }
 
 
@@ -540,6 +536,11 @@ function animate() {
 
     if (currentLane == LANE.MIDDLE) {
         c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+        trees.forEach((tree) => {
+            if (tree.lane == LANE.MIDDLE) {
+                tree.draw();
+            }
+        });
         /* c.fillStyle = '#BCE5E7';
         c.fillRect(0, 0, canvas.width, canvas.height); */
        /*  c.drawImage(ground, 0, canvas.height / 2, canvas.width, canvas.height);
@@ -548,19 +549,30 @@ function animate() {
     }
     else if (currentLane == LANE.LEFT) {
         c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+        trees.forEach((tree) => {
+            if (tree.lane == LANE.LEFT) {
+                tree.draw();
+            }
+        });
        /*  c.fillStyle = 'red';
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
     else if (currentLane == LANE.RIGHT) {
         c.drawImage(rail2, canvas.width / 2 - 125, canvas.height / 2.25, 250, canvas.height);
+        trees.forEach((tree) => {
+            if (tree.lane == LANE.RIGHT) {
+                tree.draw();
+            }
+        });
         /* c.fillStyle = 'blue';
         c.fillRect(0, 0, canvas.width, canvas.height); */
     }
 
-    trees.forEach((trees) => {
+   /*  trees.forEach((trees) => {
         trees.draw();
-    });
+    }); */
 
+    
 
 
     /* clouds.forEach(cloud => cloud.draw());
