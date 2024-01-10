@@ -134,7 +134,7 @@ function startGame(mode) {
         // tree in the middle lane
         trees.push(new Tree(300, 210, 1)); 
         trees.push(new Tree(30, 450, 1));
-        trees.push(new Tree(300, 700, 1));
+        trees.push(new Tree(300, 700, 1,));
 
         // tree in the left lane
         trees.push(new Tree(40, 210, 2));
@@ -380,7 +380,7 @@ class Tree {
 
     constructor(x, y, type) {
         this.image = new Image();
-        this.scale = 0.1;  // Adjust this value to change the size of the trees
+        this.scale = 0.1 // Adjust this value to change the size of the trees
         this.width = this.image.width * this.scale;
         this.height = this.image.height * this.scale;
         this.type = type;
