@@ -18,7 +18,7 @@ let backgroundImage;
 let startScreenTextDiv;
 
 isTimeout = false;
-let rail2 = new Image(); 
+let rail2 = new Image();
 // Lanes
 const LANE = {
     LEFT: 0,
@@ -130,21 +130,21 @@ function startGame(mode) {
         backgroundImage.src = './IMG/Background_2.png';
         c.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
 
-        
+
         // tree in the middle lane
-        trees.push(new Tree(300, 210, 1)); 
+        trees.push(new Tree(300, 210, 1));
         trees.push(new Tree(30, 450, 1));
         trees.push(new Tree(300, 700, 1,));
 
         // tree in the left lane
         trees.push(new Tree(40, 210, 2));
         trees.push(new Tree(300, 550, 2));
-        trees.push(new Tree(10, 700, 2)); 
+        trees.push(new Tree(10, 700, 2));
 
         // tree in the right lane
-        trees.push(new Tree(300, 110, 3));   
-        trees.push(new Tree(30, 350, 3)); 
-        trees.push(new Tree(300, 600, 3)); 
+        trees.push(new Tree(300, 110, 3));
+        trees.push(new Tree(30, 350, 3));
+        trees.push(new Tree(300, 600, 3));
 
     }
 
@@ -378,9 +378,11 @@ class Cloud {
 class Tree {
     type = 0;
 
-    constructor(x, y, type) {
+    constructor(x, y, type, scale) {
         this.image = new Image();
-        this.scale = 0.1 // Adjust this value to change the size of the trees
+        this.scale = scale // Adjust this value to change the size of the trees
+        if (scale == 0)
+            scale = 1;
         this.width = this.image.width * this.scale;
         this.height = this.image.height * this.scale;
         this.type = type;
@@ -398,7 +400,7 @@ class Tree {
         }
         else if (type == 3) {
             this.image.src = './IMG/Tree3.png';
-            this.position.y += 100; 
+            this.position.y += 100;
         }
     }
 
