@@ -11,6 +11,7 @@ let elapsedTime = 0;
 let isGameOver = false;
 
 
+
 let leftSound = new Audio();
 let rightSound = new Audio();
 
@@ -24,6 +25,12 @@ const LANE = {
     LEFT: 0,
     MIDDLE: 1,
     RIGHT: 2
+};
+
+const DINOSTATE = {
+    WALK: 0,
+    CHOMP: 1,
+    DEAD: 2
 };
 
 let heartImage = new Image();
@@ -40,8 +47,7 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 function handleLoad() {
-    cacheImages(["IMG/Background_2.png", "IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]);
-
+    (cacheImages(["IMG/Background_2.png", "IMG/Dino_Ham.png", "IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]))
     leftSound.src = "./SOUND/Left.mp3";
     rightSound.src = "./SOUND/Right.mp3";
 
@@ -86,20 +92,21 @@ function handleLoad() {
     startScreenDiv = document.getElementById("start"); */
     /* 
     startScreenTextDiv = startScreenDiv.querySelector("p");
-
-
+ 
+ 
     startScreenDiv.style.display = "block";
     startScreenDiv.style.height = window.innerHeight + "px"; 
     //setOverlayText("touch screen to start"); 
-
+ 
     btn.addEventListener("pointerdown", () => {
         setOverlayText("checking for motion sensors...");
         const deviceMotionPromise = requestDeviceMotion();
-
+ 
         Promise.all([deviceMotionPromise])
             .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
             .catch((error) => setOverlayError(error)); // display error
     }); */
+
 }
 
 function startGame(mode) {
@@ -199,9 +206,11 @@ class Player {
 class Invader {
     //declare variables
     velocity;
+    state;
 
     //Get Images for left and right step
     image;
+    imageChomp;
 
     imageLeft;
     imageRight;
@@ -231,6 +240,10 @@ class Invader {
 
         this.image = new Image();
         this.image.src = './IMG/Dino.png';
+
+        this.imageChomp = new Image();
+        this.imageChomp.src = './IMG/Dino_Ham.png';
+        this.state = DINOSTATE.WALK;
 
         this.imageLeft = document.querySelector("#left");
         this.imageRight = document.querySelector("#right");
@@ -274,7 +287,7 @@ class Invader {
     }
 
     draw() {
-        if (this.image && this.lane === currentLane) {
+        if (this.image && this.lane === currentLane && this.state === DINOSTATE.WALK) {
             if (this.currentImgIsLeft) {
                 c.drawImage(
                     this.imageLeft,
@@ -295,6 +308,15 @@ class Invader {
             }
             this.playSound();
         }
+        else if (this.imageChomp && this.lane === currentLane && this.state === DINOSTATE.CHOMP) {
+            c.drawImage(
+                this.imageChomp,
+                this.position.x,
+                this.position.y,
+                this.width,
+                this.height
+            );
+        }
 
         const scale = 1 + (this.position.y / canvas.height) * 0.02;
 
@@ -313,8 +335,12 @@ class Invader {
 
         this.position.x = canvas.width / 2 - this.width / 2;
 
-        if (this.position.x < canvas.width / 4 && this.lane === currentLane) {
-            handleCollision();
+        if (this.position.x < canvas.width / 4 && this.lane == currentLane) {
+            this.state = DINOSTATE.CHOMP;
+        }
+
+        if (this.position.x < canvas.width / 6 && this.lane === currentLane) {
+            handleCollision();  
         }
 
         if (this.width >= canvas.width) {
@@ -744,12 +770,11 @@ function resetGame() {
     randomInterval();
 }
 
-function cacheImages(array) {
+async function cacheImages(array) {
     if (!cacheImages.list) {
         cacheImages.list = [];
     }
     var list = cacheImages.list;
-    console.log(list)
 
     for (var i = 0; i < array.length; i++) {
         var img = new Image();
@@ -768,4 +793,6 @@ function cacheImages(array) {
             img.src = array[i];
         }
     }
+
+    return true;
 }
