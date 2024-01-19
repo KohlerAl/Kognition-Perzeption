@@ -46,8 +46,9 @@ const invaders = [];
 
 window.addEventListener("load", handleLoad);
 
-function handleLoad() {
-    (cacheImages(["IMG/Background_2.png", "IMG/Dino_Ham.png", "IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]))
+async function handleLoad() {
+    let imgs = await cacheImages(["IMG/Background_2.png", "IMG/Dino_Ham.png", "IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]);
+    console.log(imgs);
     leftSound.src = "./SOUND/Left.mp3";
     rightSound.src = "./SOUND/Right.mp3";
 
@@ -340,7 +341,7 @@ class Invader {
         }
 
         if (this.position.x < canvas.width / 6 && this.lane === currentLane) {
-            handleCollision();  
+            handleCollision();
         }
 
         if (this.width >= canvas.width) {
@@ -794,5 +795,9 @@ async function cacheImages(array) {
         }
     }
 
-    return true;
+   /*  return new Promise((resolve) => {
+        console.log(resolve); 
+    }); */
+
+    return true; 
 }
