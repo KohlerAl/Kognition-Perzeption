@@ -47,12 +47,13 @@ const invaders = [];
 window.addEventListener("load", handleLoad);
 
 async function handleLoad() {
-    let imgs = await cacheImages(["IMG/Background_2.png", "IMG/Dino_Ham.png", "IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Dino.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]);
+    let imgs = await cacheImages(["IMG/Background_2.png", "IMG/Dino_Ham.png", "IMG/Dino_Walk1.png", "IMG/Dino_Walk2.png", "IMG/Tree1.png", "IMG/Tree2.png", "IMG/Tree3.png"]);
     console.log(imgs);
     leftSound.src = "./SOUND/Left.mp3";
     rightSound.src = "./SOUND/Right.mp3";
 
-    let gameMode;
+    startScreenDiv = document.getElementById("start");
+    startScreenTextDiv = startScreenDiv.querySelector("p");
 
     // Get the buttons from the HTML document
     let audioButton = document.getElementById("audioButton");
@@ -62,16 +63,22 @@ async function handleLoad() {
     // Add event listeners to the buttons
     audioButton.addEventListener("click", function () {
         gameMode = "Audio";
-        audioButton.style.display = "none"; // Hide the Audio button
-        visualButton.style.display = "none"; // Hide the Visual button
-        letsGoButton.style.display = "block"; // Show the "Let's go" button
+        setOverlayText("checking for motion sensors...");
+        const deviceMotionPromise = requestDeviceMotion();
+ 
+        Promise.all([deviceMotionPromise])
+            .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
+            .catch((error) => setOverlayError(error)); // display error
     });
 
     visualButton.addEventListener("click", function () {
         gameMode = "Visual";
-        audioButton.style.display = "none"; // Hide the Audio button
-        visualButton.style.display = "none"; // Hide the Visual button
-        letsGoButton.style.display = "block"; // Show the "Let's go" button
+        setOverlayText("checking for motion sensors...");
+        const deviceMotionPromise = requestDeviceMotion();
+ 
+        Promise.all([deviceMotionPromise])
+            .then(() => startScreenDiv.style.display = "none", startGame()) // close start screen (everything is ok)
+            .catch((error) => setOverlayError(error)); // display error
     });
 
     letsGoButton.addEventListener("click", function () {
@@ -86,13 +93,11 @@ async function handleLoad() {
         }
     });
 
-    startScreenDiv = document.getElementById("start");
 
     /* let btn = document.querySelector("button");
     btn.addEventListener("pointerdown", startGame);
     startScreenDiv = document.getElementById("start"); */
     /* 
-    startScreenTextDiv = startScreenDiv.querySelector("p");
  
  
     startScreenDiv.style.display = "block";
@@ -110,8 +115,11 @@ async function handleLoad() {
 
 }
 
-function startGame(mode) {
-    gameMode = mode;
+function startGame() {
+    audioButton.style.display = "none"; // Hide the Audio button
+    visualButton.style.display = "none"; // Hide the Visual button
+    letsGoButton.style.display = "block"; // Show the "Let's go" button
+
     window.addEventListener("devicemotion", onDeviceMotion);
     canvas = document.querySelector('canvas');
     c = canvas.getContext('2d');
@@ -129,10 +137,10 @@ function startGame(mode) {
     document.getElementById("lives").style.display = "block";
 
     // Mode-specific setup
-    if (mode === "Audio") {
+    if (gameMode === "Audio") {
         // Set the background to black, show the timer and hearts
         canvas.style.background = "black";
-    } else if (mode === "Visual") {
+    } else if (gameMode === "Visual") {
         // Set the background image
         backgroundImage = new Image();
         backgroundImage.src = './IMG/Background_2.png';
@@ -240,7 +248,7 @@ class Invader {
         };
 
         this.image = new Image();
-        this.image.src = './IMG/Dino.png';
+        this.image.src = './IMG/Dino_Walk1.png';
 
         this.imageChomp = new Image();
         this.imageChomp.src = './IMG/Dino_Ham.png';
@@ -410,6 +418,7 @@ class Tree {
         this.scale = scale // Adjust this value to change the size of the trees
         if (scale == 0)
             scale = 1;
+
         this.width = this.image.width * this.scale;
         this.height = this.image.height * this.scale;
         this.type = type;
@@ -795,9 +804,9 @@ async function cacheImages(array) {
         }
     }
 
-   /*  return new Promise((resolve) => {
-        console.log(resolve); 
-    }); */
+    /*  return new Promise((resolve) => {
+         console.log(resolve); 
+     }); */
 
-    return true; 
+    return true;
 }
