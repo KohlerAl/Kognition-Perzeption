@@ -706,7 +706,7 @@ function onDeviceMotion(e) {
         // trigger on left kick but not on right stop
         const threshold = Math.min(-defaultThreshold, -0.666 * rightPeak);
         if (currentFilteredAcc < threshold) {
-            switchLanes("d");
+            switchLanes("a");
             isTimeout = true;
 
             window.setTimeout(function () {
@@ -720,7 +720,7 @@ function onDeviceMotion(e) {
         // trigger on right kick but not on left stop
         const threshold = Math.max(defaultThreshold, -0.666 * leftPeak);
         if (currentFilteredAcc >= threshold) {
-            switchLanes("a");
+            switchLanes("d");
             isTimeout = true;
 
             window.setTimeout(function () {
